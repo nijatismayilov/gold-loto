@@ -1,4 +1,11 @@
-export const UNAUTHORIZED = {
+import { Language } from "features/localizationSlice";
+import type { UnauthorizedLocale, SignUpFormLocale, FooterLocale, SignInFormLocale } from "./types";
+
+export type LocaleMap<Locale> = {
+	[lang in Language]: Locale;
+};
+
+export const UNAUTHORIZED: LocaleMap<UnauthorizedLocale> = {
 	az: {
 		error: "Zəhmət olmasa daxil olun",
 	},
@@ -10,7 +17,7 @@ export const UNAUTHORIZED = {
 	},
 };
 
-export const FOOTER = {
+export const FOOTER: LocaleMap<FooterLocale> = {
 	az: {
 		copyright: "Bütün hüquqlar qorunur",
 	},
@@ -22,7 +29,7 @@ export const FOOTER = {
 	},
 };
 
-export const SIGNIN_FORM = {
+export const SIGNIN_FORM: LocaleMap<SignInFormLocale> = {
 	az: {
 		formTitle: "Giriş",
 		usernameLabel: "İstifadəçi adı",
@@ -64,7 +71,7 @@ export const SIGNIN_FORM = {
 	},
 };
 
-export const SIGNUP_FORM = {
+export const SIGNUP_FORM: LocaleMap<SignUpFormLocale> = {
 	az: {
 		formTitle: "Qeydiyyat",
 		nameLabel: "Ad",
@@ -74,17 +81,18 @@ export const SIGNUP_FORM = {
 		pathernalNameLabel: "Ata adı",
 		pathernalNameError: "Ata adı boş ola bilməz",
 		phoneLabel: "Mobil nömrə",
-		phoneError: "Mobil nömrə boş ola bilməz",
+		phoneRequiredError: "Mobil nömrə boş ola bilməz",
+		phoneInvalidError: "Mobil nömrə düzgün deyil",
 		emailLabel: "E-poçt",
-		emailRequired: "E-poçt boş ola bilməz",
-		emailInvalid: "E-poçt düzgün deyil",
+		emailRequiredError: "E-poçt boş ola bilməz",
+		emailInvalidError: "E-poçt düzgün deyil",
 		usernameLabel: "İstifadəçi adı",
 		usernameError: "İstifadəçi adı boş ola bilməz",
 		passwordLabel: "Şifrə",
-		passwordRequired: "Şifrə boş ola bilməz",
-		passwordMin: "Şifrə 6 simvoldan az ola bilməz",
+		passwordRequiredError: "Şifrə boş ola bilməz",
+		passwordMinError: "Şifrə 6 simvoldan az ola bilməz",
 		passwordConfirmLabel: "Şifrə təsdiq",
-		passwordMatch: "Şifrələr eyni deyil",
+		passwordMatchError: "Şifrələr eyni deyil",
 		referralIdLabel: "Referal İD",
 		submitButton: "Qeydiyyat",
 	},
@@ -97,17 +105,18 @@ export const SIGNUP_FORM = {
 		pathernalNameLabel: "Pathernal Name",
 		pathernalNameError: "Pathernal Name can't be empty",
 		phoneLabel: "Phone",
-		phoneError: "Phone can't be empty",
+		phoneRequiredError: "Phone can't be empty",
+		phoneInvalidError: "Phone is invalid",
 		emailLabel: "Email",
-		emailRequired: "Email can't be empty",
-		emailInvalid: "Email is invalid",
+		emailRequiredError: "Email can't be empty",
+		emailInvalidError: "Email is invalid",
 		usernameLabel: "Username",
 		usernameError: "Username can't be empty",
 		passwordLabel: "Password",
-		passwordRequired: "Password can't be empty",
-		passwordMin: "Password must be at least 6 characters",
+		passwordRequiredError: "Password can't be empty",
+		passwordMinError: "Password must be at least 6 characters",
 		passwordConfirmLabel: "Password Confirm",
-		passwordMatch: "Passwords doesn't match",
+		passwordMatchError: "Passwords doesn't match",
 		referralIdLabel: "Referral ID",
 		submitButton: "Sign Up",
 	},
@@ -120,17 +129,18 @@ export const SIGNUP_FORM = {
 		pathernalNameLabel: "Отчество",
 		pathernalNameError: "Отчество не может быть пустым",
 		phoneLabel: "Телефон",
-		phoneError: "Телефон не может быть пустым",
+		phoneRequiredError: "Телефон не может быть пустым",
+		phoneInvalidError: "Телефон не валиден",
 		emailLabel: "Электронная почта",
-		emailRequired: "Электронная почта не может быть пустой",
-		emailInvalid: "Электронная почта неверна",
+		emailRequiredError: "Электронная почта не может быть пустой",
+		emailInvalidError: "Электронная почта неверна",
 		usernameLabel: "Имя пользователя",
 		usernameError: "Имя пользователя не может быть пустым",
 		passwordLabel: "Пароль",
-		passwordRequired: "Пароль не может быть пустым",
-		passwordMin: "Пароль должен быть не менее 6 символов",
+		passwordRequiredError: "Пароль не может быть пустым",
+		passwordMinError: "Пароль должен быть не менее 6 символов",
 		passwordConfirmLabel: "Подтверждение пароля",
-		passwordMatch: "Пароли не совпадают",
+		passwordMatchError: "Пароли не совпадают",
 		referralIdLabel: "Реферальный ID",
 		submitButton: "Зарегистрироваться",
 	},

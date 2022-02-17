@@ -3,8 +3,6 @@ import { Control, Controller } from "react-hook-form";
 import { FormHelperText } from "@mui/material";
 import "react-phone-input-2/lib/material.css";
 
-import { AZ } from "country-flag-icons/string/3x2";
-
 interface Props {
 	name: string;
 	control: Control<any>;
@@ -13,10 +11,8 @@ interface Props {
 	label?: string;
 }
 
-console.log(AZ);
-
 const PhoneNumberField: React.FC<Props> = (props) => {
-	const { name, control, helperText, error = false, label = "wdss" } = props;
+	const { name, control, helperText, error = false, label = "" } = props;
 
 	return (
 		<Controller

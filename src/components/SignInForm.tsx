@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextField from "components/Textfield";
 import { SIGNIN_FORM } from "locales";
-import { validationSchema } from "form-validations/signinForm";
+import { buildSignInErrorMessages, validationSchema } from "form-validations/signinForm";
 import { SignInPayload, useLoginMutation } from "features/authApi";
 import { useRouter } from "next/router";
 import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
@@ -17,14 +17,13 @@ const SignInForm: React.FC<Props> = (props) => {
 	const TEXTS = SIGNIN_FORM[language];
 	const [login, { isLoading: isLoginLoading }] = useLoginMutation();
 	const router = useRouter();
+	const errorMessages = buildSignInErrorMessages(TEXTS);
 
 	const methods = useForm<SignInPayload>({
 		defaultValues: { username: "", password: "" },
 		mode: "onSubmit",
 		reValidateMode: "onSubmit",
-		resolver: yupResolver(
-			validationSchema({ username: TEXTS.usernameError, password: TEXTS.passwordError })
-		),
+		resolver: yupResolver(validationSchema(errorMessages)),
 	});
 	const {
 		register,

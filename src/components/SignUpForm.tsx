@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Checkbox } from "@mui/material";
 import TextField from "./Textfield";
 import { SIGNUP_FORM } from "locales";
-import { validationSchema, SignUpErrorMessages } from "form-validations/signupForm";
+import { validationSchema, buildSignUpErrorMessages } from "form-validations/signupForm";
 import { useRegisterMutation } from "features/authApi";
 import toast from "react-hot-toast";
 import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
@@ -43,22 +43,7 @@ interface Props {
 const SignUpForm: React.FC<Props> = (props) => {
 	const { language } = props;
 	const TEXTS = SIGNUP_FORM[language];
-	const errorMessages: SignUpErrorMessages = {
-		username: TEXTS.usernameError,
-		email: {
-			required: TEXTS.emailRequired,
-			invalid: TEXTS.emailInvalid,
-		},
-		phone: TEXTS.phoneError,
-		name: TEXTS.nameError,
-		surname: TEXTS.surnameError,
-		pathernalName: TEXTS.pathernalNameError,
-		password: {
-			required: TEXTS.passwordRequired,
-			min: TEXTS.passwordMin,
-		},
-		passwordMatch: TEXTS.passwordMatch,
-	};
+	const errorMessages = buildSignUpErrorMessages(TEXTS);
 
 	const methods = useForm<SignUpFormValues>({
 		defaultValues,
