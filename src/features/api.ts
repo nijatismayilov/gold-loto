@@ -1,91 +1,26 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { UserProfile } from "types/user";
+import { createSelector } from "@reduxjs/toolkit";
 import { getLanguageFromLocalStorage, getAccessTokenFromLocalStorage } from "utils/localStorage";
-
-/** Payload types */
-export type SignInPayload = {
-	username: string;
-	password: string;
-};
-
-export type SignUpPayload = {
-	username: string;
-	password: string;
-	phone: string;
-	full_name: string;
-	email: string;
-	birthday: string;
-	is_mobile: boolean;
-	referal_id: number;
-};
-
-export type UploadImagePayload = {
-	image: File;
-};
-
-export type UpdateUserProfilePayload = {
-	username: string;
-	email: string;
-	pin: string;
-	document_photo: string;
-};
-
-export type ChangePasswordPayload = {
-	old_password: string;
-	new_password: string;
-};
-
-export type PasswordResetPayload = {
-	username: string;
-};
-
-export type PasswordResetConfirmPayload = {
-	username: string;
-	reset_code: string;
-	new_password: string;
-};
-
-/** Result types */
-export type SignInResult = {
-	result: boolean;
-	message: string;
-	token: string;
-};
-
-export type GetUserProfileResult = {
-	result: boolean;
-	message: string;
-	data: UserProfile;
-};
-
-export type UploadImageResult = {
-	result: boolean;
-	message: string;
-};
-
-export type UpdateUserProfileResult = {
-	result: boolean;
-	message: string;
-};
-
-export type ChangePasswordResult = {
-	result: boolean;
-	message: string;
-};
-
-export type PasswordResetResult = {
-	result: boolean;
-	message: string;
-};
-
-export type PasswordResetConfirmResult = {
-	result: boolean;
-	message: string;
-};
+import {
+	ChangePasswordPayload,
+	ChangePasswordResult,
+	GetUserProfileResult,
+	PasswordResetConfirmPayload,
+	PasswordResetConfirmResult,
+	PasswordResetPayload,
+	PasswordResetResult,
+	SignInPayload,
+	SignInResult,
+	SignUpPayload,
+	UpdateUserProfilePayload,
+	UpdateUserProfileResult,
+	UploadImagePayload,
+	UploadImageResult,
+} from "./types";
 
 /** API Slice */
-export const authApi = createApi({
-	reducerPath: "authApi",
+export const api = createApi({
+	reducerPath: "api",
 	baseQuery: fetchBaseQuery({
 		baseUrl: " http://185.164.32.199/gold/api",
 		prepareHeaders: (headers) => {
@@ -97,13 +32,15 @@ export const authApi = createApi({
 			return headers;
 		},
 	}),
+	tagTypes: ["User"],
 	endpoints: (builder) => ({
 		login: builder.mutation<SignInResult, SignInPayload>({
-			query: (payload: SignInPayload) => ({
+			query: (payload) => ({
 				url: "/login",
 				method: "POST",
 				body: { ...payload, lang: getLanguageFromLocalStorage() },
 			}),
+			invalidatesTags: ["User"],
 		}),
 
 		getUserProfile: builder.query<GetUserProfileResult, void>({
@@ -112,18 +49,20 @@ export const authApi = createApi({
 				method: "POST",
 				body: { lang: getLanguageFromLocalStorage() },
 			}),
+			providesTags: [{ type: "User" }],
 		}),
 
 		register: builder.mutation<SignInResult, SignUpPayload>({
-			query: (payload: SignUpPayload) => ({
+			query: (payload) => ({
 				url: "/register",
 				method: "POST",
 				body: { ...payload, lang: getLanguageFromLocalStorage() },
 			}),
+			invalidatesTags: ["User"],
 		}),
 
 		uploadImage: builder.mutation<UploadImageResult, UploadImagePayload>({
-			query: (payload: UploadImagePayload) => {
+			query: (payload) => {
 				const body = new FormData();
 
 				body.append("image", payload.image);
@@ -138,23 +77,25 @@ export const authApi = createApi({
 		}),
 
 		updateUserProfile: builder.mutation<UpdateUserProfileResult, UpdateUserProfilePayload>({
-			query: (payload: UpdateUserProfilePayload) => ({
+			query: (payload) => ({
 				url: "/update-profile",
 				method: "POST",
 				body: { ...payload, lang: getLanguageFromLocalStorage() },
 			}),
+			invalidatesTags: ["User"],
 		}),
 
 		changePassword: builder.mutation<ChangePasswordResult, ChangePasswordPayload>({
-			query: (payload: ChangePasswordPayload) => ({
+			query: (payload) => ({
 				url: "/change-password",
 				method: "POST",
 				body: { ...payload, lang: getLanguageFromLocalStorage() },
 			}),
+			invalidatesTags: ["User"],
 		}),
 
 		passwordReset: builder.mutation<PasswordResetResult, PasswordResetPayload>({
-			query: (payload: PasswordResetPayload) => ({
+			query: (payload) => ({
 				url: "/password-reset",
 				method: "POST",
 				body: { ...payload, lang: getLanguageFromLocalStorage() },
@@ -163,7 +104,7 @@ export const authApi = createApi({
 
 		passwordResetConfirm: builder.mutation<PasswordResetConfirmResult, PasswordResetConfirmPayload>(
 			{
-				query: (payload: PasswordResetConfirmPayload) => ({
+				query: (payload) => ({
 					url: "/confirm-otp",
 					method: "POST",
 					body: { ...payload, lang: getLanguageFromLocalStorage() },
@@ -182,4 +123,11 @@ export const {
 	useChangePasswordMutation,
 	usePasswordResetMutation,
 	usePasswordResetConfirmMutation,
-} = authApi;
+} = api;
+
+const selectGetUserProfileResult = api.endpoints.getUserProfile.select();
+
+export const selectIsUserProfileLoading = createSelector(
+	selectGetUserProfileResult,
+	(result) => result.isLoading
+);

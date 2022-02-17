@@ -22,3 +22,10 @@
 	left: 14px !important;
 	transform: translateY(-50%) !important;
 }
+
+/*
+ * Styles for the date picker
+ */
+.MuiInputBase-root {
+	background-color: #ffffff !important;
+}

@@ -1,6 +1,6 @@
 import { configureStore, isRejectedWithValue } from "@reduxjs/toolkit";
 import { localizationSlice } from "features/localizationSlice";
-import { authApi } from "features/authApi";
+import { api } from "features/api";
 import { authSlice, flushAuth } from "features/authSlice";
 import toast from "react-hot-toast";
 import { UNAUTHORIZED } from "locales";
@@ -31,13 +31,9 @@ export const store = configureStore({
 	reducer: {
 		[localizationSlice.name]: localizationSlice.reducer,
 		[authSlice.name]: authSlice.reducer,
-		[authApi.reducerPath]: authApi.reducer,
+		[api.reducerPath]: api.reducer,
 	},
-	middleware: (getDefaultMiddleware) => [
-		...getDefaultMiddleware(),
-		authApi.middleware,
-		errorHandler,
-	],
+	middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), api.middleware, errorHandler],
 });
 
 export type RootState = ReturnType<typeof store.getState>;

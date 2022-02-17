@@ -1,10 +1,11 @@
 import { SignUpFormLocale } from "locales/types";
-import { object, string, ref } from "yup";
+import { object, string, ref, bool, date } from "yup";
 
 export type SignUpErrorMessages = {
 	name: string;
 	surname: string;
 	pathernalName: string;
+	birthday: string;
 	phone: {
 		required: string;
 		invalid: string;
@@ -34,6 +35,7 @@ export const buildSignUpErrorMessages = (texts: SignUpFormLocale): SignUpErrorMe
 	name: texts.nameError,
 	surname: texts.surnameError,
 	pathernalName: texts.pathernalNameError,
+	birthday: texts.birthdayError,
 	password: {
 		required: texts.passwordRequiredError,
 		min: texts.passwordMinError,
@@ -42,8 +44,17 @@ export const buildSignUpErrorMessages = (texts: SignUpFormLocale): SignUpErrorMe
 });
 
 export const validationSchema = (errorMessages: SignUpErrorMessages) => {
-	const { name, surname, pathernalName, phone, email, username, password, passwordMatch } =
-		errorMessages;
+	const {
+		name,
+		surname,
+		pathernalName,
+		phone,
+		email,
+		username,
+		password,
+		passwordMatch,
+		birthday,
+	} = errorMessages;
 
 	return object().shape({
 		name: string().required(name),
@@ -54,5 +65,7 @@ export const validationSchema = (errorMessages: SignUpErrorMessages) => {
 		username: string().required(username),
 		password: string().required(password.required).min(6, password.min),
 		passwordConfirm: string().oneOf([ref("password"), null], passwordMatch),
+		agreeToTerms: bool().oneOf([true]),
+		birthday: date().required(birthday).nullable(),
 	});
 };

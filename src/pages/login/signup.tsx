@@ -7,7 +7,7 @@ const Login: FC = () => {
 	const language = useSelector(selectLanguage);
 
 	return (
-		<div className='bg-[url("../assets/bg-2.png")] bg-no-repeat bg-cover bg-center flex justify-center pt-[100px] pb-[450px]'>
+		<div className='bg-[url("../assets/bg-2.png")] bg-no-repeat bg-cover bg-center flex justify-center py-[100px]'>
 			<SignUpForm language={language} />
 		</div>
 	);

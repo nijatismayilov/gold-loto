@@ -5,7 +5,7 @@ import {
 	removeAccessTokenFromLocalStorage,
 	setAccessTokenToLocalStorage,
 } from "utils/localStorage";
-import { authApi } from "./authApi";
+import { api } from "./api";
 
 export type AuthState = {
 	isAuthenticated: boolean;
@@ -26,9 +26,6 @@ export const authSlice = createSlice({
 
 			setAccessTokenToLocalStorage(action.payload);
 		},
-		setUser: (state, action: PayloadAction<UserProfile>) => {
-			state.user = action.payload;
-		},
 		flushAuth: (state) => {
 			state.isAuthenticated = false;
 			state.user = null;
@@ -37,7 +34,7 @@ export const authSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
+		builder.addMatcher(api.endpoints.login.matchFulfilled, (state, action) => {
 			const { token, result } = action.payload;
 
 			if (result) {
@@ -46,14 +43,14 @@ export const authSlice = createSlice({
 				setAccessTokenToLocalStorage(token);
 			}
 		});
-		builder.addMatcher(authApi.endpoints.getUserProfile.matchFulfilled, (state, action) => {
+		builder.addMatcher(api.endpoints.getUserProfile.matchFulfilled, (state, action) => {
 			const { result, data } = action.payload;
 
 			if (result) {
 				state.user = data;
 			}
 		});
-		builder.addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
+		builder.addMatcher(api.endpoints.register.matchFulfilled, (state, action) => {
 			const { token, result } = action.payload;
 
 			if (result) {
@@ -65,7 +62,7 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { flushAuth, authenticate, setUser } = authSlice.actions;
+export const { flushAuth, authenticate } = authSlice.actions;
 
 const selectAuth = (state: RootState) => state.auth;
 

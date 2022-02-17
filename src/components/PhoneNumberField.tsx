@@ -42,6 +42,7 @@ const PhoneNumberField: React.FC<Props> = (props) => {
 							disableDropdown
 							onlyCountries={["az"]}
 							isValid={!error}
+							placeholder='+994 (50) 111 11 11'
 						/>
 
 						{helperText && (

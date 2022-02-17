@@ -1,14 +1,15 @@
 import { Language } from "features/localizationSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Checkbox } from "@mui/material";
-import TextField from "./Textfield";
+import TextField from "components/Textfield";
 import { SIGNUP_FORM } from "locales";
 import { validationSchema, buildSignUpErrorMessages } from "form-validations/signupForm";
-import { useRegisterMutation } from "features/authApi";
-import toast from "react-hot-toast";
+import { useRegisterMutation } from "features/api";
 import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
-import PhoneNumberField from "./PhoneNumberField";
+import PhoneNumberField from "components/PhoneNumberField";
+import CheckboxField from "components/CheckboxField";
+import { buildSignUpPayload } from "request-payload-builders/signupForm";
+import DatePicker from "components/DatePicker";
 
 export type SignUpFormValues = {
 	name: string;
@@ -21,6 +22,7 @@ export type SignUpFormValues = {
 	password: string;
 	passwordConfirm: string;
 	agreeToTerms: boolean;
+	birthday: Date;
 };
 
 const defaultValues: SignUpFormValues = {
@@ -33,6 +35,7 @@ const defaultValues: SignUpFormValues = {
 	referralId: "",
 	password: "",
 	passwordConfirm: "",
+	birthday: null,
 	agreeToTerms: false,
 };
 
@@ -44,6 +47,7 @@ const SignUpForm: React.FC<Props> = (props) => {
 	const { language } = props;
 	const TEXTS = SIGNUP_FORM[language];
 	const errorMessages = buildSignUpErrorMessages(TEXTS);
+	const [registerAction, { isLoading: isRegisterLoading }] = useRegisterMutation();
 
 	const methods = useForm<SignUpFormValues>({
 		defaultValues,
@@ -54,27 +58,22 @@ const SignUpForm: React.FC<Props> = (props) => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isDirty },
+		formState: { errors },
 		trigger,
 		control,
-		watch,
 	} = methods;
 
-	useRevalidateFormOnLangChange({ trigger, isDirty });
+	useRevalidateFormOnLangChange({ trigger });
 
 	const onSubmit: SubmitHandler<SignUpFormValues> = (values) => {
-		if (!values.agreeToTerms) return toast.error("");
+		const payload = buildSignUpPayload(values);
 
-		console.log(values);
+		registerAction(payload);
 	};
-
-	const values = watch();
 
 	return (
 		<div className='rounded-xl bg-accent shadow-lg py-5 px-6 flex flex-col w-[90%] xs:w-[80%] sm:w-fit'>
 			<h3 className='text-center font-semibold text-4xl mb-4'>{TEXTS.formTitle}</h3>
-
-			<pre>{JSON.stringify(values, null, 2)}</pre>
 
 			<form className='w-full sm:w-[350px] mb-14' onSubmit={handleSubmit(onSubmit)}>
 				<div className='mb-4'>
@@ -108,16 +107,22 @@ const SignUpForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mb-4'>
+					<DatePicker
+						label={TEXTS.birthdayLabel}
+						control={control}
+						name='birthday'
+						error={!!errors.birthday}
+						helperText={errors.birthday ? errors.birthday.message : " "}
+					/>
+				</div>
+
+				<div className='mb-4'>
 					<PhoneNumberField
 						label={TEXTS.phoneLabel}
 						name={"phone"}
 						control={control}
 						helperText={errors.phone ? errors.phone.message : " "}
 						error={!!errors.phone}
-						// {...register("phone")}
-						// label={TEXTS.phoneLabel}
-						// helperText={errors.phone ? errors.phone.message : " "}
-						// error={!!errors.phone}
 					/>
 				</div>
 
@@ -157,6 +162,7 @@ const SignUpForm: React.FC<Props> = (props) => {
 						label={TEXTS.passwordConfirmLabel}
 						{...register("passwordConfirm")}
 						fullWidth
+						type='password'
 						helperText={errors.passwordConfirm ? errors.passwordConfirm.message : " "}
 						error={!!errors.passwordConfirm}
 					/>
@@ -173,36 +179,24 @@ const SignUpForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mb-4'>
-					<Checkbox {...register("agreeToTerms")} />
+					<CheckboxField
+						label={TEXTS.agreeToTerms}
+						name='agreeToTerms'
+						control={control}
+						error={!!errors.agreeToTerms}
+					/>
 				</div>
 
 				<div className='mt-8'>
 					<button
 						type='submit'
 						className='bg-primary py-[10px] w-full text-center text-white font-semibold text-2xl rounded active:scale-[97.5%] transition-all'
-						// disabled={isLoginLoading}
+						disabled={isRegisterLoading}
 					>
 						{TEXTS.submitButton}
 					</button>
 				</div>
 			</form>
-
-			{/* <div className='flex flex-col sm:flex-row items-center justify-between text-[20px] leading-6 mb-5'>
-				<span>{TEXTS.donthaveaccount}</span>
-				<button
-					onClick={() => setLoginView("signup")}
-					className='px-3 py-1 rounded border border-primary font-medium mt-2 sm:mt-0'
-				>
-					{TEXTS.signupButton}
-				</button>
-			</div> */}
-
-			{/* <span
-				className='text-[20px] leading-6 cursor-pointer mx-auto'
-				onClick={() => setLoginView("password recovery")}
-			>
-				{TEXTS.forgotPasswordButton}
-			</span> */}
 		</div>
 	);
 };

@@ -5,17 +5,16 @@ import { selectLanguage } from "features/localizationSlice";
 
 type Arguments<T> = {
 	trigger: UseFormTrigger<T>;
-	isDirty: boolean;
 };
 
 export const useRevalidateFormOnLangChange = <T>(args: Arguments<T>) => {
-	const { trigger, isDirty } = args;
+	const { trigger } = args;
 	const isMounted = useRef(false);
 	const language = useSelector(selectLanguage);
 
 	useEffect(() => {
-		isMounted.current && isDirty && trigger();
-	}, [isDirty, language, trigger]);
+		isMounted.current && trigger();
+	}, [, language, trigger]);
 
 	useEffect(() => {
 		isMounted.current = true;

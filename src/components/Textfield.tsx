@@ -10,6 +10,9 @@ const TextField = forwardRef<HTMLDivElement, TextFieldProps>((props, ref) => {
 					backgroundColor: "white",
 					borderColor: "#764A34",
 				},
+				"& .MuiTextField-root": {
+					borderColor: "#764A34",
+				},
 			}}
 			autoComplete='new-password'
 			{...props}

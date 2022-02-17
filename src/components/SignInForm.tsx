@@ -4,7 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextField from "components/Textfield";
 import { SIGNIN_FORM } from "locales";
 import { buildSignInErrorMessages, validationSchema } from "form-validations/signinForm";
-import { SignInPayload, useLoginMutation } from "features/authApi";
+import { SignInPayload } from "features/types";
+import { useLoginMutation } from "features/api";
 import { useRouter } from "next/router";
 import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
 
@@ -28,11 +29,11 @@ const SignInForm: React.FC<Props> = (props) => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isDirty },
+		formState: { errors },
 		trigger,
 	} = methods;
 
-	useRevalidateFormOnLangChange({ trigger, isDirty });
+	useRevalidateFormOnLangChange({ trigger });
 
 	const onSubmit: SubmitHandler<SignInPayload> = (values) => {
 		login(values);

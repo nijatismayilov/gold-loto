@@ -28,6 +28,8 @@ export type SignUpFormLocale = {
 	surnameError: string;
 	pathernalNameLabel: string;
 	pathernalNameError: string;
+	birthdayLabel: string;
+	birthdayError: string;
 	phoneLabel: string;
 	phoneRequiredError: string;
 	phoneInvalidError: string;
@@ -43,4 +45,5 @@ export type SignUpFormLocale = {
 	passwordMatchError: string;
 	referralIdLabel: string;
 	submitButton: string;
+	agreeToTerms: string;
 };
