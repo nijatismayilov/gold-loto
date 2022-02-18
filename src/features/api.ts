@@ -4,6 +4,10 @@ import { LocalStorage } from "utils/local-storage";
 import {
 	ChangePasswordPayload,
 	ChangePasswordResult,
+	GetCampaignsResult,
+	GetGameByIdPayload,
+	GetGameByIdResult,
+	GetGamesResult,
 	GetUserProfileResult,
 	PasswordResetConfirmPayload,
 	PasswordResetConfirmResult,
@@ -32,7 +36,7 @@ export const api = createApi({
 			return headers;
 		},
 	}),
-	tagTypes: ["User"],
+	tagTypes: ["User", "Game", "Campaign"],
 	endpoints: (builder) => ({
 		login: builder.mutation<SignInResult, SignInPayload>({
 			query: (payload) => ({
@@ -111,6 +115,31 @@ export const api = createApi({
 				}),
 			}
 		),
+
+		getGames: builder.query<GetGamesResult, void>({
+			query: () => ({
+				url: "/games",
+				method: "GET",
+			}),
+			providesTags: [{ type: "Game", id: "LIST" }],
+		}),
+
+		getGameById: builder.query<GetGameByIdResult, GetGameByIdPayload>({
+			query: (payload) => ({
+				url: `/get-game-by-id`,
+				method: "GET",
+				body: { ...payload, lang: LocalStorage.getLanguage() },
+			}),
+			providesTags: (result) => (result ? [{ type: "Game", id: result.data.id }] : []),
+		}),
+
+		getCampaigns: builder.query<GetCampaignsResult, void>({
+			query: () => ({
+				url: "/campaigns",
+				method: "GET",
+			}),
+			providesTags: [{ type: "Campaign", id: "LIST" }],
+		}),
 	}),
 });
 
@@ -123,6 +152,9 @@ export const {
 	useChangePasswordMutation,
 	usePasswordResetMutation,
 	usePasswordResetConfirmMutation,
+	useGetGamesQuery,
+	useGetGameByIdQuery,
+	useGetCampaignsQuery,
 } = api;
 
 const selectGetUserProfileResult = api.endpoints.getUserProfile.select();

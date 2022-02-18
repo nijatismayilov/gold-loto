@@ -1,3 +1,5 @@
+import { Campaign } from "types/campaign";
+import { Game } from "types/game";
 import { UserProfile } from "types/user";
 
 /** Payload types */
@@ -43,6 +45,10 @@ export type PasswordResetConfirmPayload = {
 	new_password: string;
 };
 
+export type GetGameByIdPayload = {
+	game_id: number;
+};
+
 /** Result types */
 export type SignInResult = {
 	result: boolean;
@@ -79,4 +85,23 @@ export type PasswordResetResult = {
 export type PasswordResetConfirmResult = {
 	result: boolean;
 	message: string;
+};
+
+export type GetGamesResult = {
+	result: boolean;
+	message: string;
+	data: Omit<Game, "percent" | "max_ticket" | "row_count">[];
+};
+
+export type GetGameByIdResult = {
+	result: boolean;
+	message: string;
+	data: Game;
+};
+
+export type GetCampaignsResult = {
+	result: boolean;
+	message: string;
+	total_count: number;
+	data: Campaign[];
 };
