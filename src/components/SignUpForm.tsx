@@ -80,7 +80,7 @@ const SignUpForm: React.FC<Props> = (props) => {
 
 	return (
 		<FormLayout title={TEXTS.formTitle}>
-			<form className='w-full sm:w-[350px]' onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className='mb-4'>
 					<TextField
 						label={TEXTS.nameLabel}

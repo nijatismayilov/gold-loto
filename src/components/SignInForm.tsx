@@ -43,7 +43,7 @@ const SignInForm: React.FC<Props> = (props) => {
 
 	return (
 		<FormLayout title={TEXTS.formTitle}>
-			<form className='w-full sm:w-[350px] mb-14' onSubmit={handleSubmit(onSubmit)}>
+			<form className='mb-14' onSubmit={handleSubmit(onSubmit)}>
 				<div className='mb-4'>
 					<TextField
 						label={TEXTS.usernameLabel}
