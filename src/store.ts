@@ -4,7 +4,7 @@ import { api } from "features/api";
 import { authSlice, flushAuth } from "features/authSlice";
 import toast from "react-hot-toast";
 import { UNAUTHORIZED } from "locales";
-import { getLanguageFromLocalStorage } from "utils/localStorage";
+import { getLanguageFromLocalStorage } from "utils/local-storage";
 
 const errorHandler = (api) => (next) => (action) => {
 	if (action.payload?.message) {

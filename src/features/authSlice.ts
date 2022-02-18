@@ -1,10 +1,7 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "store";
 import { UserProfile } from "types/user";
-import {
-	removeAccessTokenFromLocalStorage,
-	setAccessTokenToLocalStorage,
-} from "utils/localStorage";
+import { setAccessTokenToLocalStorage } from "utils/local-storage";
 import { api } from "./api";
 
 export type AuthState = {

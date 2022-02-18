@@ -8,7 +8,7 @@ import type { NextComponentType } from "next";
 import AuthenticatedRoute from "components/AuthenticatedRoute";
 import { useEffect } from "react";
 import "../styles/globals.css";
-import { getAccessTokenFromLocalStorage } from "utils/localStorage";
+import { LocalStorage } from "utils/local-storage";
 import { authenticate } from "features/authSlice";
 
 type CustomAppProps = AppProps & {
@@ -17,7 +17,7 @@ type CustomAppProps = AppProps & {
 
 function MyApp({ Component, pageProps }: CustomAppProps) {
 	useEffect(() => {
-		const token = getAccessTokenFromLocalStorage();
+		const token = LocalStorage.getAccessToken();
 
 		if (token) {
 			store.dispatch(authenticate(token));

@@ -1,6 +1,6 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "store";
-import { setLanguageToLocalStorage } from "utils/localStorage";
+import { LocalStorage } from "utils/local-storage";
 
 export type Language = "az" | "en" | "ru";
 
@@ -19,7 +19,7 @@ export const localizationSlice = createSlice({
 		setLanguage: (state, action: PayloadAction<Language>) => {
 			state.language = action.payload;
 
-			setLanguageToLocalStorage(action.payload);
+			LocalStorage.setLanguage(action.payload);
 		},
 	},
 });

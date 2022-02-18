@@ -5,7 +5,7 @@ import Logo from "components/Logo";
 import { AZ, RU, GB } from "country-flag-icons/react/3x2";
 import Select, { OnChangeValue } from "react-select";
 import LangOptionLabel from "components/LangOptionLabel";
-import { getLanguageFromLocalStorage } from "utils/localStorage";
+import { LocalStorage } from "utils/local-storage";
 import { flushAuth, selectUser } from "features/authSlice";
 import ProfileIcon from "components/ProfileIcon";
 
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
 	};
 
 	useEffect(() => {
-		const cacheLang = getLanguageFromLocalStorage();
+		const cacheLang = LocalStorage.getLanguage();
 
 		dispatch(setLanguage(cacheLang));
 	}, [dispatch]);

@@ -1,5 +1,11 @@
 import { Language } from "features/localizationSlice";
-import type { UnauthorizedLocale, SignUpFormLocale, FooterLocale, SignInFormLocale } from "./types";
+import type {
+	UnauthorizedLocale,
+	SignUpFormLocale,
+	FooterLocale,
+	SignInFormLocale,
+	PasswordRevoceryFormLocale,
+} from "./types";
 
 export type LocaleMap<Locale> = {
 	[lang in Language]: Locale;
@@ -98,6 +104,7 @@ export const SIGNUP_FORM: LocaleMap<SignUpFormLocale> = {
 		referralIdLabel: "Referal İD",
 		submitButton: "Qeydiyyat",
 		agreeToTerms: "Şərtlər və qaydalar toplusunu qəbul edirəm",
+		haveAccount: "Hesabınız var?",
 	},
 	en: {
 		formTitle: "Sign Up",
@@ -125,6 +132,7 @@ export const SIGNUP_FORM: LocaleMap<SignUpFormLocale> = {
 		referralIdLabel: "Referral ID",
 		submitButton: "Sign Up",
 		agreeToTerms: "I agree to the terms and conditions",
+		haveAccount: "Already have an account?",
 	},
 	ru: {
 		formTitle: "Регистрация",
@@ -152,5 +160,54 @@ export const SIGNUP_FORM: LocaleMap<SignUpFormLocale> = {
 		referralIdLabel: "Реферальный ID",
 		submitButton: "Зарегистрироваться",
 		agreeToTerms: "Я согласен с условиями и положениями",
+		haveAccount: "Уже есть аккаунт?",
+	},
+};
+
+export const PASSWORD_RECOVERY_FORM: LocaleMap<PasswordRevoceryFormLocale> = {
+	az: {
+		formTitle: {
+			passwordRecovery: "Şifrə bərpası",
+			otp: "OTP təsdiqləmə",
+		},
+		inputLabel: {
+			passwordRecovery: "E-poçt",
+			otp: "OTP kodu",
+		},
+		inputError: {
+			passwordRecovery: "E-poçt boş ola bilməz",
+			otp: "OTP kodu boş ola bilməz",
+		},
+		submitButton: "Təsdiq et",
+	},
+	en: {
+		formTitle: {
+			passwordRecovery: "Password Recovery",
+			otp: "OTP Verification",
+		},
+		inputLabel: {
+			passwordRecovery: "Email",
+			otp: "OTP Code",
+		},
+		inputError: {
+			passwordRecovery: "Email can't be empty",
+			otp: "OTP Code can't be empty",
+		},
+		submitButton: "Submit",
+	},
+	ru: {
+		formTitle: {
+			passwordRecovery: "Восстановление пароля",
+			otp: "Подтверждение OTP",
+		},
+		inputLabel: {
+			passwordRecovery: "Электронная почта",
+			otp: "Код OTP",
+		},
+		inputError: {
+			passwordRecovery: "Электронная почта не может быть пустой",
+			otp: "Код OTP не может быть пустым",
+		},
+		submitButton: "Подтвердить",
 	},
 };

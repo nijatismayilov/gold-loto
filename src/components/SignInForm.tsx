@@ -3,12 +3,13 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextField from "components/Textfield";
 import { SIGNIN_FORM } from "locales";
-import { buildSignInErrorMessages, validationSchema } from "form-validations/signinForm";
+import { buildSignInErrorMessages, validationSchema } from "form-validations/signin-form";
 import { SignInPayload } from "features/types";
 import { useLoginMutation } from "features/api";
 import { useRouter } from "next/router";
 import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
 import LoadingButton from "components/LoadingButton";
+import FormLayout from "components/FormLayout";
 
 interface Props {
 	language: Language;
@@ -41,9 +42,7 @@ const SignInForm: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<div className='rounded-xl bg-accent shadow-lg py-5 px-6 flex flex-col w-[90%] xs:w-[80%] sm:w-fit'>
-			<h3 className='text-center font-semibold text-4xl mb-4'>{TEXTS.formTitle}</h3>
-
+		<FormLayout title={TEXTS.formTitle}>
 			<form className='w-full sm:w-[350px] mb-14' onSubmit={handleSubmit(onSubmit)}>
 				<div className='mb-4'>
 					<TextField
@@ -78,7 +77,7 @@ const SignInForm: React.FC<Props> = (props) => {
 			<div className='flex flex-col sm:flex-row items-center justify-between text-[20px] leading-6 mb-8'>
 				<span>{TEXTS.donthaveaccount}</span>
 				<button
-					onClick={() => router.push("login/signup")}
+					onClick={() => router.push("/login/signup")}
 					className='px-3 py-1 rounded border border-primary font-medium mt-2 sm:mt-0 hover:bg-primary hover:text-white transition-all'
 				>
 					{TEXTS.signupButton}
@@ -87,11 +86,11 @@ const SignInForm: React.FC<Props> = (props) => {
 
 			<span
 				className='text-[20px] leading-6 px-3 rounded py-1 cursor-pointer mx-auto hover:bg-primary hover:text-white transition-all'
-				onClick={() => router.push("login/password_recovery")}
+				onClick={() => router.push("/login/password_recovery")}
 			>
 				{TEXTS.forgotPasswordButton}
 			</span>
-		</div>
+		</FormLayout>
 	);
 };
 

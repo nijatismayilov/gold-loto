@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createSelector } from "@reduxjs/toolkit";
-import { getLanguageFromLocalStorage, getAccessTokenFromLocalStorage } from "utils/localStorage";
+import { getLanguageFromLocalStorage, getAccessTokenFromLocalStorage } from "utils/local-storage";
 import {
 	ChangePasswordPayload,
 	ChangePasswordResult,

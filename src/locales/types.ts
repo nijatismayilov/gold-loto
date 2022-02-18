@@ -46,4 +46,21 @@ export type SignUpFormLocale = {
 	referralIdLabel: string;
 	submitButton: string;
 	agreeToTerms: string;
+	haveAccount: string;
+};
+
+export type PasswordRevoceryFormLocale = {
+	formTitle: {
+		passwordRecovery: string;
+		otp: string;
+	};
+	inputLabel: {
+		passwordRecovery: string;
+		otp: string;
+	};
+	inputError: {
+		passwordRecovery: string;
+		otp: string;
+	};
+	submitButton: string;
 };

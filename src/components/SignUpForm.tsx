@@ -3,14 +3,16 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextField from "components/Textfield";
 import { SIGNUP_FORM } from "locales";
-import { validationSchema, buildSignUpErrorMessages } from "form-validations/signupForm";
+import { validationSchema, buildSignUpErrorMessages } from "form-validations/signup-form";
 import { useRegisterMutation } from "features/api";
 import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
 import PhoneNumberField from "components/PhoneNumberField";
 import CheckboxField from "components/CheckboxField";
-import { buildSignUpPayload } from "request-payload-builders/signupForm";
+import { buildSignUpPayload } from "request-payload-builders/signup-form";
 import DatePicker from "components/DatePicker";
 import LoadingButton from "components/LoadingButton";
+import { useRouter } from "next/router";
+import FormLayout from "components/FormLayout";
 
 export type SignUpFormValues = {
 	name: string;
@@ -49,6 +51,7 @@ const SignUpForm: React.FC<Props> = (props) => {
 	const TEXTS = SIGNUP_FORM[language];
 	const errorMessages = buildSignUpErrorMessages(TEXTS);
 	const [registerAction, { isLoading: isRegisterLoading }] = useRegisterMutation();
+	const router = useRouter();
 
 	const methods = useForm<SignUpFormValues>({
 		defaultValues,
@@ -76,10 +79,8 @@ const SignUpForm: React.FC<Props> = (props) => {
 	};
 
 	return (
-		<div className='rounded-xl bg-accent shadow-lg py-5 px-6 flex flex-col w-[90%] xs:w-[80%] sm:w-fit'>
-			<h3 className='text-center font-semibold text-4xl mb-4'>{TEXTS.formTitle}</h3>
-
-			<form className='w-full sm:w-[350px] mb-14' onSubmit={handleSubmit(onSubmit)}>
+		<FormLayout title={TEXTS.formTitle}>
+			<form className='w-full sm:w-[350px]' onSubmit={handleSubmit(onSubmit)}>
 				<div className='mb-4'>
 					<TextField
 						label={TEXTS.nameLabel}
@@ -196,8 +197,17 @@ const SignUpForm: React.FC<Props> = (props) => {
 						{TEXTS.submitButton}
 					</LoadingButton>
 				</div>
+
+				<div className='flex justify-center mt-8'>
+					<span
+						className='text-[20px] leading-6 px-3 rounded py-1 cursor-pointer mx-auto hover:bg-primary hover:text-white transition-all'
+						onClick={() => router.push("/login")}
+					>
+						{TEXTS.haveAccount}
+					</span>
+				</div>
 			</form>
-		</div>
+		</FormLayout>
 	);
 };
 
