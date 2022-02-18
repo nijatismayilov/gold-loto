@@ -8,6 +8,7 @@ import { SignInPayload } from "features/types";
 import { useLoginMutation } from "features/api";
 import { useRouter } from "next/router";
 import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
+import LoadingButton from "components/LoadingButton";
 
 interface Props {
 	language: Language;
@@ -68,13 +69,9 @@ const SignInForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mt-8'>
-					<button
-						type='submit'
-						className='bg-primary py-[10px] w-full text-center text-white font-semibold text-2xl rounded active:scale-[97.5%] transition-all'
-						disabled={isLoginLoading}
-					>
+					<LoadingButton type='submit' isLoading={isLoginLoading}>
 						{TEXTS.submitButton}
-					</button>
+					</LoadingButton>
 				</div>
 			</form>
 

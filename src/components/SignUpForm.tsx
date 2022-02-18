@@ -10,6 +10,7 @@ import PhoneNumberField from "components/PhoneNumberField";
 import CheckboxField from "components/CheckboxField";
 import { buildSignUpPayload } from "request-payload-builders/signupForm";
 import DatePicker from "components/DatePicker";
+import LoadingButton from "components/LoadingButton";
 
 export type SignUpFormValues = {
 	name: string;
@@ -61,7 +62,10 @@ const SignUpForm: React.FC<Props> = (props) => {
 		formState: { errors },
 		trigger,
 		control,
+		watch,
 	} = methods;
+
+	console.log(watch("birthday"));
 
 	useRevalidateFormOnLangChange({ trigger });
 
@@ -188,13 +192,9 @@ const SignUpForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mt-8'>
-					<button
-						type='submit'
-						className='bg-primary py-[10px] w-full text-center text-white font-semibold text-2xl rounded active:scale-[97.5%] transition-all'
-						disabled={isRegisterLoading}
-					>
+					<LoadingButton type='submit' isLoading={isRegisterLoading}>
 						{TEXTS.submitButton}
-					</button>
+					</LoadingButton>
 				</div>
 			</form>
 		</div>

@@ -29,3 +29,10 @@
 .MuiInputBase-root {
 	background-color: #ffffff !important;
 }
+
+/*
+ * Styles for circular progress
+ */
+.MuiCircularProgress-root {
+	color: #764a34 !important;
+}

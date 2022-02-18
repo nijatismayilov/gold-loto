@@ -5,7 +5,7 @@ import { Controller, Control } from "react-hook-form";
 import { ru, az, enGB } from "date-fns/locale";
 import { Language, selectLanguage } from "features/localizationSlice";
 import { useSelector } from "react-redux";
-import { subYears } from "date-fns";
+import { subYears, getMonth } from "date-fns";
 
 const localeMap: { [key in Language]: typeof az } = {
 	az,
@@ -44,10 +44,16 @@ const DatePicker: React.FC<Props> = (props) => {
 					<LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap[language]}>
 						<MuiDatePicker
 							mask={maskMap[language]}
-							onChange={(value) => onChange(value)}
+							onChange={(value) => {
+								if (value == "Invalid Date") onChange(null);
+								else onChange(new Date(value));
+							}}
 							value={value}
 							label={label}
 							maxDate={maxDate}
+							defaultCalendarMonth={maxDate}
+							disableFuture
+							disableHighlightToday
 							renderInput={(params) => (
 								<Textfield {...params} error={error} helperText={helperText} fullWidth />
 							)}
