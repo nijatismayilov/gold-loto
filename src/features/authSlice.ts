@@ -1,7 +1,7 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "store";
 import { UserProfile } from "types/user";
-import { setAccessTokenToLocalStorage } from "utils/local-storage";
+import { LocalStorage } from "utils/local-storage";
 import { api } from "./api";
 
 export type AuthState = {
@@ -21,13 +21,13 @@ export const authSlice = createSlice({
 		authenticate: (state, action: PayloadAction<string>) => {
 			state.isAuthenticated = true;
 
-			setAccessTokenToLocalStorage(action.payload);
+			LocalStorage.setAccessToken(action.payload);
 		},
 		flushAuth: (state) => {
 			state.isAuthenticated = false;
 			state.user = null;
 
-			setAccessTokenToLocalStorage("");
+			LocalStorage.setAccessToken("");
 		},
 	},
 	extraReducers: (builder) => {
@@ -37,7 +37,7 @@ export const authSlice = createSlice({
 			if (result) {
 				state.isAuthenticated = true;
 
-				setAccessTokenToLocalStorage(token);
+				LocalStorage.setAccessToken(token);
 			}
 		});
 		builder.addMatcher(api.endpoints.getUserProfile.matchFulfilled, (state, action) => {
@@ -53,7 +53,7 @@ export const authSlice = createSlice({
 			if (result) {
 				state.isAuthenticated = true;
 
-				setAccessTokenToLocalStorage(token);
+				LocalStorage.setAccessToken(token);
 			}
 		});
 	},

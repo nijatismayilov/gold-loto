@@ -1,4 +1,4 @@
-import { FormView as PasswordRecoveryFormView } from "components/PasswordRecoveryForm";
+import { FormView as PasswordRecoveryFormView } from "pages/login/password_recovery";
 import { Language } from "features/localizationSlice";
 
 export class LocalStorage {
@@ -14,6 +14,10 @@ export class LocalStorage {
 		return localStorage.getItem("password-recovery-form-view") as PasswordRecoveryFormView;
 	};
 
+	public static getPasswordRecoveryUsername = () => {
+		return localStorage.getItem("password-recovery-username") || "";
+	};
+
 	public static setLanguage = (lang: Language) => {
 		localStorage.setItem("lang", lang);
 	};
@@ -25,25 +29,8 @@ export class LocalStorage {
 	public static setPasswordRecoveryFormView = (view: PasswordRecoveryFormView) => {
 		localStorage.setItem("password-recovery-form-view", view);
 	};
+
+	public static setPasswordRecoveryUsername = (username: string) => {
+		localStorage.setItem("password-recovery-username", username);
+	};
 }
-
-// export const getLanguageFromLocalStorage = () => (localStorage.getItem("lang") || "az") as Language;
-
-// export const getAccessTokenFromLocalStorage = () => localStorage.getItem("access-token");
-
-// export const getPasswordRecoveryFormView = () =>
-// 	localStorage.getItem("password-recovery-form-view") as PasswordRecoveryFormView;
-
-// export const setLanguageToLocalStorage = (lang: Language) => localStorage.setItem("lang", lang);
-
-// export const setAccessTokenToLocalStorage = (token: string) => {
-// 	localStorage.setItem("access-token", token);
-// };
-
-// export const setPasswordRecoveryFormView = (view: PasswordRecoveryFormView) => {
-// 	localStorage.setItem("password-recovery-form-view", view);
-// };
-
-// export const removePasswordRecoveryFormView = () => {
-// 	localStorage.removeItem("password-recovery-form-view");
-// };

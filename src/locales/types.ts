@@ -50,17 +50,24 @@ export type SignUpFormLocale = {
 };
 
 export type PasswordRevoceryFormLocale = {
-	formTitle: {
-		passwordRecovery: string;
-		otp: string;
-	};
-	inputLabel: {
-		passwordRecovery: string;
-		otp: string;
-	};
-	inputError: {
-		passwordRecovery: string;
-		otp: string;
-	};
+	formTitle: string;
+	usernameLabel: string;
+	usernameError: string;
 	submitButton: string;
+	haveAccount: string;
+};
+
+export type OtpConfirmFormLocale = {
+	formTitle: string;
+	usernameLabel: string;
+	otpLabel: string;
+	otpError: string;
+	newPasswordLabel: string;
+	newPasswordRequiredError: string;
+	newPasswordMinError: string;
+	confirmNewPasswordLabel: string;
+	confirmNewPasswordError: string;
+	submitButton: string;
+	haveAccount: string;
+	passwordRecovery: string;
 };

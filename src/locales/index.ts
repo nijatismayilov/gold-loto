@@ -5,6 +5,7 @@ import type {
 	FooterLocale,
 	SignInFormLocale,
 	PasswordRevoceryFormLocale,
+	OtpConfirmFormLocale,
 } from "./types";
 
 export type LocaleMap<Locale> = {
@@ -166,48 +167,69 @@ export const SIGNUP_FORM: LocaleMap<SignUpFormLocale> = {
 
 export const PASSWORD_RECOVERY_FORM: LocaleMap<PasswordRevoceryFormLocale> = {
 	az: {
-		formTitle: {
-			passwordRecovery: "Şifrə bərpası",
-			otp: "OTP təsdiqləmə",
-		},
-		inputLabel: {
-			passwordRecovery: "E-poçt",
-			otp: "OTP kodu",
-		},
-		inputError: {
-			passwordRecovery: "E-poçt boş ola bilməz",
-			otp: "OTP kodu boş ola bilməz",
-		},
+		formTitle: "Şifrə bərpası",
+		usernameLabel: "İstifadəçi adı",
+		usernameError: "İstifadəçi adı boş ola bilməz",
 		submitButton: "Təsdiq et",
+		haveAccount: "Hesabınız var?",
 	},
 	en: {
-		formTitle: {
-			passwordRecovery: "Password Recovery",
-			otp: "OTP Verification",
-		},
-		inputLabel: {
-			passwordRecovery: "Email",
-			otp: "OTP Code",
-		},
-		inputError: {
-			passwordRecovery: "Email can't be empty",
-			otp: "OTP Code can't be empty",
-		},
+		formTitle: "Password Recovery",
+		usernameLabel: "Username",
+		usernameError: "Username can't be empty",
 		submitButton: "Submit",
+		haveAccount: "Already have an account?",
 	},
 	ru: {
-		formTitle: {
-			passwordRecovery: "Восстановление пароля",
-			otp: "Подтверждение OTP",
-		},
-		inputLabel: {
-			passwordRecovery: "Электронная почта",
-			otp: "Код OTP",
-		},
-		inputError: {
-			passwordRecovery: "Электронная почта не может быть пустой",
-			otp: "Код OTP не может быть пустым",
-		},
-		submitButton: "Подтвердить",
+		formTitle: "Восстановление пароля",
+		usernameLabel: "Имя пользователя",
+		usernameError: "Имя пользователя не может быть пустым",
+		submitButton: "Отправить",
+		haveAccount: "Уже есть аккаунт?",
+	},
+};
+
+export const OTP_CONFIRM_FORM: LocaleMap<OtpConfirmFormLocale> = {
+	az: {
+		formTitle: "OTP təsdiqləmə",
+		usernameLabel: "İstifadəçi adı",
+		otpLabel: "OTP kodu",
+		otpError: "OTP kodu boş ola bilməz",
+		newPasswordLabel: "Yeni şifrə",
+		newPasswordRequiredError: "Yeni şifrə boş ola bilməz",
+		newPasswordMinError: "Yeni şifrə 8 simvoldan az olmamalıdır",
+		confirmNewPasswordLabel: "Yeni şifrə təsdiqləmə",
+		confirmNewPasswordError: "Şifrələr eyni deyil",
+		submitButton: "Təsdiq et",
+		haveAccount: "Hesabınız var?",
+		passwordRecovery: "Şifrə bərpası",
+	},
+	en: {
+		formTitle: "OTP Confirmation",
+		usernameLabel: "Username",
+		otpLabel: "OTP Code",
+		otpError: "OTP Code can't be empty",
+		newPasswordLabel: "New Password",
+		newPasswordRequiredError: "New Password can't be empty",
+		newPasswordMinError: "New Password must be at least 8 characters",
+		confirmNewPasswordLabel: "Confirm New Password",
+		confirmNewPasswordError: "Passwords don't match",
+		submitButton: "Submit",
+		haveAccount: "Already have an account?",
+		passwordRecovery: "Password Recovery",
+	},
+	ru: {
+		formTitle: "Подтверждение OTP",
+		usernameLabel: "Имя пользователя",
+		otpLabel: "Код OTP",
+		otpError: "Код OTP не может быть пустым",
+		newPasswordLabel: "Новый пароль",
+		newPasswordRequiredError: "Новый пароль не может быть пустым",
+		newPasswordMinError: "Новый пароль должен быть не менее 8 символов",
+		confirmNewPasswordLabel: "Подтвердите новый пароль",
+		confirmNewPasswordError: "Пароли не совпадают",
+		submitButton: "Отправить",
+		haveAccount: "Уже есть аккаунт?",
+		passwordRecovery: "Восстановление пароля",
 	},
 };

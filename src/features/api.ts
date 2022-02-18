@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createSelector } from "@reduxjs/toolkit";
-import { getLanguageFromLocalStorage, getAccessTokenFromLocalStorage } from "utils/local-storage";
+import { LocalStorage } from "utils/local-storage";
 import {
 	ChangePasswordPayload,
 	ChangePasswordResult,
@@ -24,7 +24,7 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: " http://185.164.32.199/gold/api",
 		prepareHeaders: (headers) => {
-			const token = getAccessTokenFromLocalStorage();
+			const token = LocalStorage.getAccessToken();
 
 			headers.set("Authorization", `Bearer ${token}`);
 			headers.set("Content-Type", "application/json");
@@ -38,7 +38,7 @@ export const api = createApi({
 			query: (payload) => ({
 				url: "/login",
 				method: "POST",
-				body: { ...payload, lang: getLanguageFromLocalStorage() },
+				body: { ...payload, lang: LocalStorage.getLanguage() },
 			}),
 			invalidatesTags: ["User"],
 		}),
@@ -47,7 +47,7 @@ export const api = createApi({
 			query: () => ({
 				url: "/get-user-data",
 				method: "POST",
-				body: { lang: getLanguageFromLocalStorage() },
+				body: { lang: LocalStorage.getLanguage() },
 			}),
 			providesTags: [{ type: "User" }],
 		}),
@@ -56,7 +56,7 @@ export const api = createApi({
 			query: (payload) => ({
 				url: "/register",
 				method: "POST",
-				body: { ...payload, lang: getLanguageFromLocalStorage() },
+				body: { ...payload, lang: LocalStorage.getLanguage() },
 			}),
 			invalidatesTags: ["User"],
 		}),
@@ -66,7 +66,7 @@ export const api = createApi({
 				const body = new FormData();
 
 				body.append("image", payload.image);
-				body.append("lang", getLanguageFromLocalStorage());
+				body.append("lang", LocalStorage.getLanguage());
 
 				return {
 					url: "/upload",
@@ -80,7 +80,7 @@ export const api = createApi({
 			query: (payload) => ({
 				url: "/update-profile",
 				method: "POST",
-				body: { ...payload, lang: getLanguageFromLocalStorage() },
+				body: { ...payload, lang: LocalStorage.getLanguage() },
 			}),
 			invalidatesTags: ["User"],
 		}),
@@ -89,7 +89,7 @@ export const api = createApi({
 			query: (payload) => ({
 				url: "/change-password",
 				method: "POST",
-				body: { ...payload, lang: getLanguageFromLocalStorage() },
+				body: { ...payload, lang: LocalStorage.getLanguage() },
 			}),
 			invalidatesTags: ["User"],
 		}),
@@ -98,7 +98,7 @@ export const api = createApi({
 			query: (payload) => ({
 				url: "/password-reset",
 				method: "POST",
-				body: { ...payload, lang: getLanguageFromLocalStorage() },
+				body: { ...payload, lang: LocalStorage.getLanguage() },
 			}),
 		}),
 
@@ -107,7 +107,7 @@ export const api = createApi({
 				query: (payload) => ({
 					url: "/confirm-otp",
 					method: "POST",
-					body: { ...payload, lang: getLanguageFromLocalStorage() },
+					body: { ...payload, lang: LocalStorage.getLanguage() },
 				}),
 			}
 		),

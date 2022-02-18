@@ -4,7 +4,7 @@ import { api } from "features/api";
 import { authSlice, flushAuth } from "features/authSlice";
 import toast from "react-hot-toast";
 import { UNAUTHORIZED } from "locales";
-import { getLanguageFromLocalStorage } from "utils/local-storage";
+import { LocalStorage } from "utils/local-storage";
 
 const errorHandler = (api) => (next) => (action) => {
 	if (action.payload?.message) {
@@ -15,7 +15,7 @@ const errorHandler = (api) => (next) => (action) => {
 
 	if (isRejectedWithValue(action)) {
 		if (action.payload.status === 401) {
-			const lang = getLanguageFromLocalStorage();
+			const lang = LocalStorage.getLanguage();
 			const message = UNAUTHORIZED[lang].error;
 
 			toast.error(message);
