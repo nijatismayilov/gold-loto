@@ -71,3 +71,17 @@ export type OtpConfirmFormLocale = {
 	haveAccount: string;
 	passwordRecovery: string;
 };
+
+export type GameLocale = {
+	circulation: string;
+	status: {
+		waiting: string;
+		starting: string;
+		started: string;
+	};
+	price: string;
+	prize: string;
+	players: string;
+	lastRow: string;
+	lastPrize: string;
+};

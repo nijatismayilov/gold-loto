@@ -6,6 +6,7 @@ import type {
 	SignInFormLocale,
 	PasswordRevoceryFormLocale,
 	OtpConfirmFormLocale,
+	GameLocale,
 } from "./types";
 
 export type LocaleMap<Locale> = {
@@ -231,5 +232,48 @@ export const OTP_CONFIRM_FORM: LocaleMap<OtpConfirmFormLocale> = {
 		submitButton: "Отправить",
 		haveAccount: "Уже есть аккаунт?",
 		passwordRecovery: "Восстановление пароля",
+	},
+};
+
+export const GAME: LocaleMap<GameLocale> = {
+	az: {
+		circulation: "Tiraj nömrəsi",
+		status: {
+			waiting: "Gözləyir",
+			starting: "Başlayır",
+			started: "Başladı",
+		},
+
+		price: "Oyun qiyməti",
+		prize: "Uduş məbləği",
+		players: "onlayn oyunçu",
+		lastRow: "Udan rəqəmlər",
+		lastPrize: "Son uduş",
+	},
+	en: {
+		circulation: "Circulation",
+		status: {
+			waiting: "Waiting",
+			starting: "Starting",
+			started: "Started",
+		},
+		price: "Game price",
+		prize: "Prize",
+		players: "online players",
+		lastRow: "Last won numbers",
+		lastPrize: "Last prize",
+	},
+	ru: {
+		circulation: "Тираж",
+		status: {
+			waiting: "Ожидание",
+			starting: "Начало",
+			started: "Начало",
+		},
+		price: "Цена игры",
+		prize: "Выигрыш",
+		players: "Онлайн игроков",
+		lastRow: "Последние выигранные числа",
+		lastPrize: "Последний выигрыш",
 	},
 };
