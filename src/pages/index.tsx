@@ -16,7 +16,7 @@ const Home: React.FC = () => {
 
 	return (
 		<main>
-			<div className="bg-[url('../assets/bg-4.png')] py-24 px-3 min-h-screen">
+			<div className='bg-4 py-24 px-3 min-h-screen'>
 				{isGamesLoading ? (
 					<CircularProgress />
 				) : (

@@ -37,7 +37,7 @@ const Login: FC = () => {
 	}, []);
 
 	return (
-		<LoginLayout background={`bg-[url("../assets/bg-3.png")]`}>
+		<LoginLayout background={`bg-3`}>
 			{formView === "passwordRecovery" && (
 				<PasswordRecoveryForm
 					language={language}

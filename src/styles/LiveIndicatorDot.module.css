@@ -16,7 +16,6 @@
 	border-color: #62bd19;
 	border-style: solid;
 	border-radius: 50%;
-	/* border-width: 3px; */
 	animation: pulsate 1s ease-out;
 	animation-iteration-count: infinite;
 	opacity: 0;

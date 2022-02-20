@@ -16,7 +16,7 @@
 	width: 24px !important;
 	height: 16px !important;
 	background-repeat: no-repeat !important;
-	background-image: url(../assets/az.svg) !important;
+	background-image: url("/az.svg") !important;
 	background-position: center !important;
 	margin-top: 0 !important;
 	left: 14px !important;

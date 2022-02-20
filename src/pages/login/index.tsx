@@ -8,7 +8,7 @@ const Login: FC = () => {
 	const language = useSelector(selectLanguage);
 
 	return (
-		<LoginLayout background={`bg-[url("../assets/bg-1.png")]`}>
+		<LoginLayout background={`bg-1`}>
 			<SignInForm language={language} />
 		</LoginLayout>
 	);
