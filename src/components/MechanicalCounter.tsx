@@ -4,7 +4,7 @@ import { MechanicalCounter as MechanicalCounterComponent } from "mechanical-coun
 
 interface Props {
 	text: string | number;
-	spinnerSize?: number;
+	spinnerSize: number;
 }
 
 const MechanicalCounter: React.FC<Props> = (props) => {

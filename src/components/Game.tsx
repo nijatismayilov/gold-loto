@@ -7,6 +7,7 @@ import TicketNumberCircle from "components/TicketNumberCircle";
 import { useMediaQuery } from "@mui/material";
 import LiveIndicatorDot from "components/LiveIndicatorDot";
 import MechanicalCounter from "components/MechanicalCounter";
+import Counter from "components/Counter";
 
 interface Props {
 	game: GameListItem;
@@ -48,7 +49,9 @@ const Game: React.FC<Props> = (props) => {
 								text={`${game.time_left[0]}`.padStart(2, "0")}
 								spinnerSize={mechanicalCounterSpinner}
 							/>
+
 							<>:</>
+
 							<MechanicalCounter
 								text={`${game.time_left[1]}`.padStart(2, "0")}
 								spinnerSize={mechanicalCounterSpinner}
@@ -58,7 +61,10 @@ const Game: React.FC<Props> = (props) => {
 				</div>
 
 				<span className='text-[#434141] text-base sm:text-lg lg:text-2xl leading-4 sm:leading-5 lg:leading-6 font-medium flex items-center'>
-					18 {TEXTS.players}{" "}
+					<Counter value={game.playerCount} fixedPoint={0} duration={0.75} />
+
+					<span className='ml-1'>{TEXTS.players}</span>
+
 					<div className='ml-2'>
 						<LiveIndicatorDot size={10} />
 					</div>

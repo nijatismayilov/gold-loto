@@ -21,6 +21,9 @@ import {
 	UploadImagePayload,
 	UploadImageResult,
 } from "./types";
+import * as workerTimers from "worker-timers";
+
+const { setInterval, clearInterval } = workerTimers;
 
 const getRandomFloat = (min: number, max: number) => {
 	return (Math.random() * (max - min) + min).toFixed(2);
@@ -131,10 +134,19 @@ export const api = createApi({
 			}),
 			providesTags: [{ type: "Game", id: "LIST" }],
 			transformResponse: (response: GetGamesResult) => {
-				const data = response.data.map((game) => ({
-					...game,
-					time_left: (+game.id === 1 ? [3, 50] : [1, 17]) as [number, number],
+				// const data = response.data.map((game) => ({
+				// 	...game,
+				// 	time_left: [getRandomInt(0, 5), getRandomInt(0, 59)] as [number, number],
+				// 	prize: getRandomFloat(0, 10),
+				// 	playerCount: getRandomInt(1, 27),
+				// }));
+
+				const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((id) => ({
+					...response.data[getRandomInt(0, 1)],
+					time_left: [getRandomInt(0, 5), getRandomInt(0, 59)] as [number, number],
 					prize: getRandomFloat(0, 10),
+					playerCount: getRandomInt(1, 27),
+					id,
 				}));
 
 				return {
@@ -145,19 +157,21 @@ export const api = createApi({
 			onCacheEntryAdded: async (_arg, options) => {
 				const { updateCachedData, cacheDataLoaded, cacheEntryRemoved } = options;
 
-				let intervalId: NodeJS.Timer;
-				let incrementInterval: NodeJS.Timer;
+				// let intervalId: NodeJS.Timer;
+				let intervalId: number;
+				// let incrementInterval: NodeJS.Timer;
+				let incrementInterval: number;
 				let incrementIntervalTiming: number = 1000;
+				// let incrementPlayerCountInterval: NodeJS.Timer;
+				let incrementPlayerCountInterval: number;
+				let incrementPlayerCountIntervalTiming: number = 1000;
 
 				try {
 					await cacheDataLoaded;
 
-					const listener = (gameId: number) => {
+					const updateTimer = () => {
 						updateCachedData((draft) => {
-							const game = draft.data.find((game) => +game.id === gameId);
-							const index = draft.data.indexOf(game);
-
-							if (game) {
+							draft.data.forEach((game) => {
 								if (game.time_left[1] === 0) {
 									if (game.time_left[0] === 0) {
 										return;
@@ -168,15 +182,29 @@ export const api = createApi({
 								} else {
 									game.time_left[1]--;
 								}
+							});
 
-								draft.data[index] = game;
-							}
+							// const game = draft.data.find((game) => +game.id === gameId);
+							// const index = draft.data.indexOf(game);
+
+							// if (game) {
+							// 	if (game.time_left[1] === 0) {
+							// 		if (game.time_left[0] === 0) {
+							// 			return;
+							// 		}
+
+							// 		game.time_left[0]--;
+							// 		game.time_left[1] = 59;
+							// 	} else {
+							// 		game.time_left[1]--;
+							// 	}
+
+							// 	draft.data[index] = game;
+							// }
 						});
 					};
 
 					const incrementPrize = (gameId: number) => {
-						console.log("fired here", gameId);
-
 						updateCachedData((draft) => {
 							const game = draft.data.find((game) => +game.id === gameId);
 							const index = draft.data.indexOf(game);
@@ -190,28 +218,60 @@ export const api = createApi({
 						});
 					};
 
+					const incrementPlayerCount = (gameId: number) => {
+						updateCachedData((draft) => {
+							const game = draft.data.find((game) => +game.id === gameId);
+							const index = draft.data.indexOf(game);
+
+							if (game) {
+								game.playerCount += getRandomInt(1, 20);
+								draft.data[index] = game;
+							}
+						});
+					};
+
 					intervalId = setInterval(() => {
-						listener(1);
-						listener(2);
+						updateTimer();
 					}, 1000);
 
 					const incrementIntervalFunc = () => {
-						incrementPrize(getRandomInt(1, 2));
+						const iterations = getRandomInt(1, 10);
+						for (let i = 0; i < iterations; i++) {
+							incrementPrize(getRandomInt(1, 10));
+						}
 
-						clearInterval(incrementInterval);
+						incrementInterval && clearInterval(incrementInterval);
 
 						incrementIntervalTiming = +getRandomFloat(0, 3000);
 
 						incrementInterval = setInterval(incrementIntervalFunc, incrementIntervalTiming);
 					};
 
+					const incrementPLayerCountFunc = () => {
+						const iterations = getRandomInt(1, 10);
+						for (let i = 0; i < iterations; i++) {
+							incrementPlayerCount(getRandomInt(1, 10));
+						}
+
+						incrementPlayerCountInterval && clearInterval(incrementPlayerCountInterval);
+
+						incrementPlayerCountIntervalTiming = +getRandomFloat(2000, 5000);
+
+						incrementPlayerCountInterval = setInterval(
+							incrementPLayerCountFunc,
+							incrementPlayerCountIntervalTiming
+						);
+					};
+
 					incrementIntervalFunc();
+					incrementPLayerCountFunc();
 				} catch (_error) {}
 
 				await cacheEntryRemoved;
 
-				clearInterval(intervalId);
-				clearInterval(incrementInterval);
+				intervalId && clearInterval(intervalId);
+				incrementInterval && clearInterval(incrementInterval);
+				incrementPlayerCountInterval && clearInterval(incrementPlayerCountInterval);
 			},
 		}),
 

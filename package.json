@@ -29,6 +29,7 @@
 		"react-phone-input-2": "^2.15.0",
 		"react-redux": "^7.2.6",
 		"react-select": "^5.2.2",
+		"worker-timers": "^7.0.45",
 		"yup": "^0.32.11"
 	},
 	"devDependencies": {
