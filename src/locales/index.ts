@@ -8,6 +8,7 @@ import type {
 	OtpConfirmFormLocale,
 	GameLocale,
 } from "./types";
+import { GameStatus } from "types/game";
 
 export type LocaleMap<Locale> = {
 	[lang in Language]: Locale;
@@ -239,9 +240,9 @@ export const GAME: LocaleMap<GameLocale> = {
 	az: {
 		circulation: "Tiraj nömrəsi",
 		status: {
-			waiting: "Gözləyir",
-			starting: "Başlayır",
-			started: "Başladı",
+			[GameStatus.waiting]: "Gözləyir",
+			[GameStatus.starting]: "Başlayır",
+			[GameStatus.started]: "Başladı",
 		},
 
 		price: "Oyun qiyməti",
@@ -253,9 +254,9 @@ export const GAME: LocaleMap<GameLocale> = {
 	en: {
 		circulation: "Circulation",
 		status: {
-			waiting: "Waiting",
-			starting: "Starting",
-			started: "Started",
+			[GameStatus.waiting]: "Waiting",
+			[GameStatus.starting]: "Starting",
+			[GameStatus.started]: "Started",
 		},
 		price: "Game price",
 		prize: "Prize",
@@ -266,9 +267,9 @@ export const GAME: LocaleMap<GameLocale> = {
 	ru: {
 		circulation: "Тираж",
 		status: {
-			waiting: "Ожидание",
-			starting: "Начало",
-			started: "Начало",
+			[GameStatus.waiting]: "Ожидание",
+			[GameStatus.starting]: "Начало",
+			[GameStatus.started]: "Начало",
 		},
 		price: "Цена игры",
 		prize: "Выигрыш",

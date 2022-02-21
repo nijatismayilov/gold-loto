@@ -1,6 +1,7 @@
 import { CircularProgress } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MechanicalCounter as MechanicalCounterComponent } from "mechanical-counter";
+import { useWindowSize } from "@reach/window-size";
 
 interface Props {
 	text: string | number;
@@ -10,19 +11,24 @@ interface Props {
 const MechanicalCounter: React.FC<Props> = (props) => {
 	const { text, spinnerSize = 24 } = props;
 	const [showCounter, setShowCounter] = useState(false);
+	const componentKey = useRef(Math.random());
+	const { width: windowWidth } = useWindowSize();
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setShowCounter(true);
 		}, 1000);
 
+		componentKey.current = Math.random();
+
 		return () => {
+			setShowCounter(false);
 			clearTimeout(timeout);
 		};
-	}, []);
+	}, [windowWidth]);
 
 	return (
-		<div className='relative'>
+		<div key={componentKey.current} className='relative'>
 			<div style={{ opacity: showCounter ? 1 : 0, transition: "all 250ms ease" }}>
 				<MechanicalCounterComponent text={text} />
 			</div>

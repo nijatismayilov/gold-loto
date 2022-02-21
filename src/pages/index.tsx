@@ -3,6 +3,7 @@ import { selectUser } from "features/authSlice";
 import { useSelector } from "react-redux";
 import { CircularProgress } from "@mui/material";
 import Game from "components/Game";
+import { useEffect } from "react";
 
 const container = "flex flex-wrap -mx-1 overflow-hidden sm:-mx-1 md:-mx-1 lg:-mx-2 xl:-mx-2";
 const col =

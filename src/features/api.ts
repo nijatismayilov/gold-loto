@@ -21,17 +21,48 @@ import {
 	UploadImagePayload,
 	UploadImageResult,
 } from "./types";
-import * as workerTimers from "worker-timers";
+import { getRandomFloat, getRandomInt } from "utils/random";
+import { GameListItem } from "types/game";
+import { Timer } from "utils/timer";
+import { Recipe } from "@reduxjs/toolkit/dist/query/core/buildThunks";
 
-const { setInterval, clearInterval } = workerTimers;
+const handleCountdown: Recipe<GetGamesResult> = (draft) => {
+	draft.data.forEach((game) => {
+		if (game.time_left[1] === 0) {
+			if (game.time_left[0] === 0) {
+				return;
+			}
 
-const getRandomFloat = (min: number, max: number) => {
-	return (Math.random() * (max - min) + min).toFixed(2);
+			game.time_left[0]--;
+			game.time_left[1] = 59;
+		} else {
+			game.time_left[1]--;
+		}
+	});
 };
 
-const getRandomInt = (min: number, max: number) => {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+const handleIncrementPrize: (gameId: number) => Recipe<GetGamesResult> = (gameId) => (draft) => {
+	const game = draft.data.find((game) => +game.id === gameId);
+	const index = draft.data.indexOf(game);
+
+	if (game) {
+		const prize = +game.prize;
+		const newPrize = prize + +getRandomFloat(0, 2);
+		game.prize = newPrize.toFixed(2);
+		draft.data[index] = game;
+	}
 };
+
+const handleIncrementPlayerCount: (gameId: number) => Recipe<GetGamesResult> =
+	(gameId) => (draft) => {
+		const game = draft.data.find((game) => +game.id === gameId);
+		const index = draft.data.indexOf(game);
+
+		if (game) {
+			game.playerCount += getRandomInt(1, 20);
+			draft.data[index] = game;
+		}
+	};
 
 /** API Slice */
 export const api = createApi({
@@ -134,19 +165,13 @@ export const api = createApi({
 			}),
 			providesTags: [{ type: "Game", id: "LIST" }],
 			transformResponse: (response: GetGamesResult) => {
-				// const data = response.data.map((game) => ({
-				// 	...game,
-				// 	time_left: [getRandomInt(0, 5), getRandomInt(0, 59)] as [number, number],
-				// 	prize: getRandomFloat(0, 10),
-				// 	playerCount: getRandomInt(1, 27),
-				// }));
-
-				const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((id) => ({
+				const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map<GameListItem>((id) => ({
 					...response.data[getRandomInt(0, 1)],
 					time_left: [getRandomInt(0, 5), getRandomInt(0, 59)] as [number, number],
-					prize: getRandomFloat(0, 10),
+					prize: getRandomFloat(0, 10).toFixed(2),
 					playerCount: getRandomInt(1, 27),
 					id,
+					status: getRandomInt(0, 2),
 				}));
 
 				return {
@@ -157,121 +182,130 @@ export const api = createApi({
 			onCacheEntryAdded: async (_arg, options) => {
 				const { updateCachedData, cacheDataLoaded, cacheEntryRemoved } = options;
 
-				// let intervalId: NodeJS.Timer;
-				let intervalId: number;
-				// let incrementInterval: NodeJS.Timer;
-				let incrementInterval: number;
-				let incrementIntervalTiming: number = 1000;
-				// let incrementPlayerCountInterval: NodeJS.Timer;
-				let incrementPlayerCountInterval: number;
-				let incrementPlayerCountIntervalTiming: number = 1000;
+				const countdownTimer = new Timer(() => updateCachedData(handleCountdown), 1000);
+				const incrementPrizeTimer = new Timer(
+					() => updateCachedData(handleIncrementPrize(getRandomInt(1, 10))),
+					150
+				);
+				const incrementPlayerCountTimer = new Timer(
+					() => updateCachedData(handleIncrementPlayerCount(getRandomInt(1, 10))),
+					250
+				);
 
 				try {
 					await cacheDataLoaded;
 
-					const updateTimer = () => {
-						updateCachedData((draft) => {
-							draft.data.forEach((game) => {
-								if (game.time_left[1] === 0) {
-									if (game.time_left[0] === 0) {
-										return;
-									}
+					// const updateTimer = () => {
+					// 	updateCachedData((draft) => {
+					// 		draft.data.forEach((game) => {
+					// 			if (game.time_left[1] === 0) {
+					// 				if (game.time_left[0] === 0) {
+					// 					return;
+					// 				}
 
-									game.time_left[0]--;
-									game.time_left[1] = 59;
-								} else {
-									game.time_left[1]--;
-								}
-							});
+					// 				game.time_left[0]--;
+					// 				game.time_left[1] = 59;
+					// 			} else {
+					// 				game.time_left[1]--;
+					// 			}
+					// 		});
 
-							// const game = draft.data.find((game) => +game.id === gameId);
-							// const index = draft.data.indexOf(game);
+					// 		// const game = draft.data.find((game) => +game.id === gameId);
+					// 		// const index = draft.data.indexOf(game);
 
-							// if (game) {
-							// 	if (game.time_left[1] === 0) {
-							// 		if (game.time_left[0] === 0) {
-							// 			return;
-							// 		}
+					// 		// if (game) {
+					// 		// 	if (game.time_left[1] === 0) {
+					// 		// 		if (game.time_left[0] === 0) {
+					// 		// 			return;
+					// 		// 		}
 
-							// 		game.time_left[0]--;
-							// 		game.time_left[1] = 59;
-							// 	} else {
-							// 		game.time_left[1]--;
-							// 	}
+					// 		// 		game.time_left[0]--;
+					// 		// 		game.time_left[1] = 59;
+					// 		// 	} else {
+					// 		// 		game.time_left[1]--;
+					// 		// 	}
 
-							// 	draft.data[index] = game;
-							// }
-						});
-					};
+					// 		// 	draft.data[index] = game;
+					// 		// }
+					// 	});
+					// };
 
-					const incrementPrize = (gameId: number) => {
-						updateCachedData((draft) => {
-							const game = draft.data.find((game) => +game.id === gameId);
-							const index = draft.data.indexOf(game);
+					// const incrementPrize = (gameId: number) => {
+					// 	updateCachedData((draft) => {
+					// 		const game = draft.data.find((game) => +game.id === gameId);
+					// 		const index = draft.data.indexOf(game);
 
-							if (game) {
-								const prize = +game.prize;
-								const newPrize = prize + +getRandomFloat(0, 2);
-								game.prize = newPrize.toFixed(2);
-								draft.data[index] = game;
-							}
-						});
-					};
+					// 		if (game) {
+					// 			const prize = +game.prize;
+					// 			const newPrize = prize + +getRandomFloat(0, 2);
+					// 			game.prize = newPrize.toFixed(2);
+					// 			draft.data[index] = game;
+					// 		}
+					// 	});
+					// };
 
-					const incrementPlayerCount = (gameId: number) => {
-						updateCachedData((draft) => {
-							const game = draft.data.find((game) => +game.id === gameId);
-							const index = draft.data.indexOf(game);
+					// const incrementPlayerCount = (gameId: number) => {
+					// 	updateCachedData((draft) => {
+					// 		const game = draft.data.find((game) => +game.id === gameId);
+					// 		const index = draft.data.indexOf(game);
 
-							if (game) {
-								game.playerCount += getRandomInt(1, 20);
-								draft.data[index] = game;
-							}
-						});
-					};
+					// 		if (game) {
+					// 			game.playerCount += getRandomInt(1, 20);
+					// 			draft.data[index] = game;
+					// 		}
+					// 	});
+					// };
 
-					intervalId = setInterval(() => {
-						updateTimer();
-					}, 1000);
+					// intervalId = setInterval(() => {
+					// 	updateTimer();
+					// }, 1000);
 
-					const incrementIntervalFunc = () => {
-						const iterations = getRandomInt(1, 10);
-						for (let i = 0; i < iterations; i++) {
-							incrementPrize(getRandomInt(1, 10));
-						}
+					// const incrementIntervalFunc = () => {
+					// 	const iterations = getRandomInt(1, 10);
+					// 	for (let i = 0; i < iterations; i++) {
+					// 		incrementPrize(getRandomInt(1, 10));
+					// 	}
 
-						incrementInterval && clearInterval(incrementInterval);
+					// 	incrementInterval && clearInterval(incrementInterval);
 
-						incrementIntervalTiming = +getRandomFloat(0, 3000);
+					// 	incrementIntervalTiming = +getRandomFloat(0, 3000);
 
-						incrementInterval = setInterval(incrementIntervalFunc, incrementIntervalTiming);
-					};
+					// 	incrementInterval = setInterval(incrementIntervalFunc, incrementIntervalTiming);
+					// };
 
-					const incrementPLayerCountFunc = () => {
-						const iterations = getRandomInt(1, 10);
-						for (let i = 0; i < iterations; i++) {
-							incrementPlayerCount(getRandomInt(1, 10));
-						}
+					// const incrementPLayerCountFunc = () => {
+					// 	const iterations = getRandomInt(1, 10);
+					// 	for (let i = 0; i < iterations; i++) {
+					// 		incrementPlayerCount(getRandomInt(1, 10));
+					// 	}
 
-						incrementPlayerCountInterval && clearInterval(incrementPlayerCountInterval);
+					// 	incrementPlayerCountInterval && clearInterval(incrementPlayerCountInterval);
 
-						incrementPlayerCountIntervalTiming = +getRandomFloat(2000, 5000);
+					// 	incrementPlayerCountIntervalTiming = +getRandomFloat(2000, 5000);
 
-						incrementPlayerCountInterval = setInterval(
-							incrementPLayerCountFunc,
-							incrementPlayerCountIntervalTiming
-						);
-					};
+					// 	incrementPlayerCountInterval = setInterval(
+					// 		incrementPLayerCountFunc,
+					// 		incrementPlayerCountIntervalTiming
+					// 	);
+					// };
 
-					incrementIntervalFunc();
-					incrementPLayerCountFunc();
+					// incrementIntervalFunc();
+					// incrementPLayerCountFunc();
+
+					countdownTimer.start();
+					incrementPrizeTimer.start();
+					incrementPlayerCountTimer.start();
 				} catch (_error) {}
 
 				await cacheEntryRemoved;
 
-				intervalId && clearInterval(intervalId);
-				incrementInterval && clearInterval(incrementInterval);
-				incrementPlayerCountInterval && clearInterval(incrementPlayerCountInterval);
+				countdownTimer.stop();
+				incrementPrizeTimer.stop();
+				incrementPlayerCountTimer.stop();
+
+				// intervalId && clearInterval(intervalId);
+				// incrementInterval && clearInterval(incrementInterval);
+				// incrementPlayerCountInterval && clearInterval(incrementPlayerCountInterval);
 			},
 		}),
 

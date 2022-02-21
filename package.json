@@ -15,6 +15,7 @@
 		"@mui/core": "^5.0.0-alpha.54",
 		"@mui/lab": "^5.0.0-alpha.69",
 		"@mui/material": "^5.4.1",
+		"@reach/window-size": "^0.16.0",
 		"@reduxjs/toolkit": "^1.7.2",
 		"classnames": "^2.3.1",
 		"country-flag-icons": "^1.4.21",

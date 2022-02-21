@@ -1,3 +1,5 @@
+import { GameStatus } from "types/game";
+
 export type UnauthorizedLocale = {
 	error: string;
 };
@@ -75,9 +77,7 @@ export type OtpConfirmFormLocale = {
 export type GameLocale = {
 	circulation: string;
 	status: {
-		waiting: string;
-		starting: string;
-		started: string;
+		[key in GameStatus]: string;
 	};
 	price: string;
 	prize: string;

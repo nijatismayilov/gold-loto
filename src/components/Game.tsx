@@ -1,4 +1,4 @@
-import { GameListItem } from "types/game";
+import { GameListItem, GameStatus } from "types/game";
 import { selectLanguage } from "features/localizationSlice";
 import { useSelector } from "react-redux";
 import { GAME } from "locales/index";
@@ -8,6 +8,7 @@ import { useMediaQuery } from "@mui/material";
 import LiveIndicatorDot from "components/LiveIndicatorDot";
 import MechanicalCounter from "components/MechanicalCounter";
 import Counter from "components/Counter";
+import { GameStatusColor } from "utils/gameStatusColor";
 
 interface Props {
 	game: GameListItem;
@@ -40,8 +41,12 @@ const Game: React.FC<Props> = (props) => {
 					</div>
 
 					<div className='flex flex-col items-center'>
-						<div className='rounded-md bg-[#FFEFCA] text-[10px] sm:text-xs lg:text-base leading-[10px] sm:leading-3 lg:leading-4 font-semibold py-0.5 sm:py-1 px-3 sm:px-4 border border-green-600 mb-2 sm:mb-3'>
-							Gözləyir
+						<div
+							className={`rounded-md text-[10px] sm:text-xs lg:text-base leading-[10px] sm:leading-3 lg:leading-4 font py-0.5 sm:py-1 px-3 sm:px-4 bg-${
+								GameStatusColor[game.status]
+							} text-white shadow-lg mb-2 sm:mb-3`}
+						>
+							{TEXTS.status[game.status]}
 						</div>
 
 						<span className='text-2xl sm:text-3xl lg:text-[44px] sm:leading-8 lg:leading-[52px] font-semibold text-[#434141] flex items-center'>
