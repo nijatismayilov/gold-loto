@@ -1,14 +1,14 @@
 import { Language } from "features/localizationSlice";
-import type {
-	UnauthorizedLocale,
-	SignUpFormLocale,
-	FooterLocale,
-	SignInFormLocale,
-	PasswordRevoceryFormLocale,
-	OtpConfirmFormLocale,
-	GameLocale,
-} from "./types";
 import { GameStatus } from "types/game";
+import type {
+	FooterLocale,
+	GameLocale,
+	OtpConfirmFormLocale,
+	PasswordRevoceryFormLocale,
+	SignInFormLocale,
+	SignUpFormLocale,
+	UnauthorizedLocale,
+} from "./types";
 
 export type LocaleMap<Locale> = {
 	[lang in Language]: Locale;

@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectLanguage } from "features/localizationSlice";
-import SignUpForm from "components/SignUpForm";
 import LoginLayout from "components/LoginLayout";
+import SignUpForm from "components/SignUpForm";
+import { selectLanguage } from "features/localizationSlice";
+import { FC } from "react";
+import { useSelector } from "react-redux";
 
 const Login: FC = () => {
 	const language = useSelector(selectLanguage);

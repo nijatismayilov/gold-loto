@@ -1,6 +1,6 @@
-import PrizeIcon from "components/PrizeIcon";
 import { useMediaQuery } from "@mui/material";
 import Counter from "components/Counter";
+import PrizeIcon from "components/PrizeIcon";
 
 interface Props {
 	title: string;

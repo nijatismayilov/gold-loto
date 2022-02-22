@@ -1,15 +1,16 @@
-import { Language } from "features/localizationSlice";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TextField from "components/Textfield";
-import { SIGNIN_FORM } from "locales";
-import { buildSignInErrorMessages, validationSchema } from "form-validations/signin-form";
-import { SignInPayload } from "features/types";
-import { useLoginMutation } from "features/api";
-import { useRouter } from "next/router";
-import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
-import LoadingButton from "components/LoadingButton";
 import FormLayout from "components/FormLayout";
+import LoadingButton from "components/LoadingButton";
+import PasswordField from "components/PasswordField";
+import TextField from "components/Textfield";
+import { useLoginMutation } from "features/api/endpoints/auth";
+import { Language } from "features/localizationSlice";
+import { SignInPayload } from "features/types";
+import { buildSignInErrorMessages, validationSchema } from "form-validations/signin-form";
+import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
+import { SIGNIN_FORM } from "locales";
+import { useRouter } from "next/router";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface Props {
 	language: Language;
@@ -56,12 +57,11 @@ const SignInForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mb-4'>
-					<TextField
+					<PasswordField
 						label={TEXTS.passwordLabel}
 						placeholder={TEXTS.passwordPlaceholder}
 						{...register("password")}
 						fullWidth
-						type='password'
 						helperText={errors.password ? errors.password.message : " "}
 						error={!!errors.password}
 					/>

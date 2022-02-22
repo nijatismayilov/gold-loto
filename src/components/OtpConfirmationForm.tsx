@@ -1,15 +1,16 @@
-import { useEffect } from "react";
-import { Language } from "features/localizationSlice";
-import FormLayout from "components/FormLayout";
-import { OTP_CONFIRM_FORM } from "locales";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import FormLayout from "components/FormLayout";
 import LoadingButton from "components/LoadingButton";
-import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
+import PasswordField from "components/PasswordField";
 import TextField from "components/Textfield";
+import { usePasswordResetConfirmMutation } from "features/api/endpoints/auth";
+import { Language } from "features/localizationSlice";
+import { buildOtpConfirmErrorMessagges, validationSchema } from "form-validations/otp-confirm-form";
+import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
+import { OTP_CONFIRM_FORM } from "locales";
 import { useRouter } from "next/router";
-import { validationSchema, buildOtpConfirmErrorMessagges } from "form-validations/otp-confirm-form";
-import { usePasswordResetConfirmMutation } from "features/api";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { buildOtpConfirmPayload } from "request-payload-builders/otp-confirm-form";
 import { LocalStorage } from "utils/local-storage";
 
@@ -93,7 +94,7 @@ const OtpConfirmationForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mb-4'>
-					<TextField
+					<PasswordField
 						label={TEXTS.newPasswordLabel}
 						{...register("newPassword")}
 						fullWidth
@@ -103,7 +104,7 @@ const OtpConfirmationForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mb-4'>
-					<TextField
+					<PasswordField
 						label={TEXTS.confirmNewPasswordLabel}
 						{...register("confirmNewPassword")}
 						fullWidth

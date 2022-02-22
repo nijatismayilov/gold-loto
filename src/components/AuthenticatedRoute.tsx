@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useGetUserProfileQuery } from "features/api/endpoints/auth";
 import { selectIsAuthenticated } from "features/authSlice";
 import { useRouter } from "next/router";
-import { useGetUserProfileQuery } from "features/api";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 interface RedirectProps {
 	redirectTo: string;

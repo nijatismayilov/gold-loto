@@ -1,5 +1,5 @@
-import { FormView as PasswordRecoveryFormView } from "pages/login/password_recovery";
 import { Language } from "features/localizationSlice";
+import { FormView as PasswordRecoveryFormView } from "pages/login/password_recovery";
 
 export class LocalStorage {
 	public static getLanguage = () => {

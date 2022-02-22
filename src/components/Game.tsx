@@ -1,14 +1,14 @@
-import { GameListItem, GameStatus } from "types/game";
-import { selectLanguage } from "features/localizationSlice";
-import { useSelector } from "react-redux";
-import { GAME } from "locales/index";
-import PriceIndicator from "components/PriceIndicator";
-import TicketNumberCircle from "components/TicketNumberCircle";
 import { useMediaQuery } from "@mui/material";
+import Counter from "components/Counter";
 import LiveIndicatorDot from "components/LiveIndicatorDot";
 import MechanicalCounter from "components/MechanicalCounter";
-import Counter from "components/Counter";
-import { GameStatusColor } from "utils/gameStatusColor";
+import PriceIndicator from "components/PriceIndicator";
+import TicketNumberCircle from "components/TicketNumberCircle";
+import { selectLanguage } from "features/localizationSlice";
+import { GAME } from "locales/index";
+import { useSelector } from "react-redux";
+import { GameListItem } from "types/game";
+import { GameStatusBgColor } from "utils/game-status-color";
 
 interface Props {
 	game: GameListItem;
@@ -25,7 +25,7 @@ const Game: React.FC<Props> = (props) => {
 	const mechanicalCounterSpinner = isSmallScreen ? 12 : isMediumScreen ? 16 : 22;
 
 	return (
-		<div className='bg-accent rounded-xl flex flex-col'>
+		<div className='bg-accent shadow-md rounded-xl flex flex-col max-w-[600px] mx-auto'>
 			<div className='flex flex-col px-3 sm:px-5 lg:px-6 pt-3 sm:pt-4 pb-2 border-b-2 border-b-[#B47B51]'>
 				<span className='text-[#434141] text-xs sm:text-base lg:text-lg leading-3 sm:leading-5 lg:leading-6 font-medium mb-2.5 sm:mb-4'>
 					{TEXTS.circulation} &#8470;{game.circulation}
@@ -42,8 +42,8 @@ const Game: React.FC<Props> = (props) => {
 
 					<div className='flex flex-col items-center'>
 						<div
-							className={`rounded-md text-[10px] sm:text-xs lg:text-base leading-[10px] sm:leading-3 lg:leading-4 font py-0.5 sm:py-1 px-3 sm:px-4 bg-${
-								GameStatusColor[game.status]
+							className={`rounded-md text-[10px] sm:text-xs lg:text-base leading-[10px] sm:leading-3 lg:leading-4 font py-0.5 sm:py-1 px-3 sm:px-4 ${
+								GameStatusBgColor[game.status]
 							} text-white shadow-lg mb-2 sm:mb-3`}
 						>
 							{TEXTS.status[game.status]}

@@ -1,18 +1,18 @@
-import { Language } from "features/localizationSlice";
-import FormLayout from "components/FormLayout";
-import { PASSWORD_RECOVERY_FORM } from "locales";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import FormLayout from "components/FormLayout";
 import LoadingButton from "components/LoadingButton";
-import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
-import { PasswordResetPayload } from "features/types";
 import TextField from "components/Textfield";
-import { useRouter } from "next/router";
+import { usePasswordResetMutation } from "features/api/endpoints/auth";
+import { Language } from "features/localizationSlice";
+import { PasswordResetPayload } from "features/types";
 import {
-	validationSchema,
 	buildPasswordRecoveryErrorMessagges,
+	validationSchema,
 } from "form-validations/password-recovery-form";
-import { usePasswordResetMutation } from "features/api";
+import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
+import { PASSWORD_RECOVERY_FORM } from "locales";
+import { useRouter } from "next/router";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const defaultValues: PasswordResetPayload = {
 	username: "",

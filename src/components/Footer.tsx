@@ -1,6 +1,6 @@
+import { selectLanguage } from "features/localizationSlice";
 import { FOOTER } from "locales";
 import { useSelector } from "react-redux";
-import { selectLanguage } from "features/localizationSlice";
 
 const Footer: React.FC = () => {
 	const language = useSelector(selectLanguage);

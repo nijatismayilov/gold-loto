@@ -1,7 +1,7 @@
-import { useRef, useEffect } from "react";
+import { selectLanguage } from "features/localizationSlice";
+import { useEffect, useRef } from "react";
 import { UseFormTrigger } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { selectLanguage } from "features/localizationSlice";
 
 type Arguments<T> = {
 	trigger: UseFormTrigger<T>;

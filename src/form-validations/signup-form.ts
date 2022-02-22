@@ -1,5 +1,5 @@
 import { SignUpFormLocale } from "locales/types";
-import { object, string, ref, bool, date } from "yup";
+import { bool, date, object, ref, string } from "yup";
 
 export type SignUpErrorMessages = {
 	name: string;

@@ -1,6 +1,6 @@
 import { SignUpFormValues } from "components/SignUpForm";
-import { SignUpPayload } from "features/types";
 import { format } from "date-fns";
+import { SignUpPayload } from "features/types";
 
 export const buildSignUpPayload = (values: SignUpFormValues): SignUpPayload => {
 	return {

@@ -4,7 +4,7 @@ const { setTimeout, clearTimeout } = workerTimers;
 
 export class Timer {
 	private expected: number;
-	private timeout: number;
+	private timeout: number = -Infinity;
 
 	constructor(private callback: Function, private interval: number) {}
 
@@ -14,7 +14,9 @@ export class Timer {
 	}
 
 	public stop() {
-		clearTimeout(this.timeout);
+		if (this.timeout !== -Infinity) {
+			clearTimeout(this.timeout);
+		}
 	}
 
 	private round = () => {

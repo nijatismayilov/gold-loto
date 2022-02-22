@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setLanguage, selectLanguage, Language } from "features/localizationSlice";
-import Logo from "components/Logo";
-import { AZ, RU, GB } from "country-flag-icons/react/3x2";
-import Select, { OnChangeValue } from "react-select";
 import LangOptionLabel from "components/LangOptionLabel";
-import { LocalStorage } from "utils/local-storage";
-import { flushAuth, selectUser } from "features/authSlice";
+import Logo from "components/Logo";
 import ProfileIcon from "components/ProfileIcon";
+import { AZ, GB, RU } from "country-flag-icons/react/3x2";
+import { flushAuth, selectUser } from "features/authSlice";
+import { Language, selectLanguage, setLanguage } from "features/localizationSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Select, { OnChangeValue } from "react-select";
+import { LocalStorage } from "utils/local-storage";
 
 type LangOption = {
 	label: React.ReactNode;

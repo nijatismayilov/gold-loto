@@ -1,18 +1,19 @@
-import { Language } from "features/localizationSlice";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TextField from "components/Textfield";
-import { SIGNUP_FORM } from "locales";
-import { validationSchema, buildSignUpErrorMessages } from "form-validations/signup-form";
-import { useRegisterMutation } from "features/api";
-import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
-import PhoneNumberField from "components/PhoneNumberField";
 import CheckboxField from "components/CheckboxField";
-import { buildSignUpPayload } from "request-payload-builders/signup-form";
 import DatePicker from "components/DatePicker";
-import LoadingButton from "components/LoadingButton";
-import { useRouter } from "next/router";
 import FormLayout from "components/FormLayout";
+import LoadingButton from "components/LoadingButton";
+import PasswordField from "components/PasswordField";
+import PhoneNumberField from "components/PhoneNumberField";
+import TextField from "components/Textfield";
+import { useRegisterMutation } from "features/api/endpoints/auth";
+import { Language } from "features/localizationSlice";
+import { buildSignUpErrorMessages, validationSchema } from "form-validations/signup-form";
+import { useRevalidateFormOnLangChange } from "hooks/useRevalidateFormOnLangChange";
+import { SIGNUP_FORM } from "locales";
+import { useRouter } from "next/router";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { buildSignUpPayload } from "request-payload-builders/signup-form";
 
 export type SignUpFormValues = {
 	name: string;
@@ -152,22 +153,20 @@ const SignUpForm: React.FC<Props> = (props) => {
 				</div>
 
 				<div className='mb-4'>
-					<TextField
+					<PasswordField
 						label={TEXTS.passwordLabel}
 						{...register("password")}
 						fullWidth
-						type='password'
 						helperText={errors.password ? errors.password.message : " "}
 						error={!!errors.password}
 					/>
 				</div>
 
 				<div className='mb-4'>
-					<TextField
+					<PasswordField
 						label={TEXTS.passwordConfirmLabel}
 						{...register("passwordConfirm")}
 						fullWidth
-						type='password'
 						helperText={errors.passwordConfirm ? errors.passwordConfirm.message : " "}
 						error={!!errors.passwordConfirm}
 					/>

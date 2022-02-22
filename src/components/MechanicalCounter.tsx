@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
-import { useEffect, useState, useRef } from "react";
-import { MechanicalCounter as MechanicalCounterComponent } from "mechanical-counter";
 import { useWindowSize } from "@reach/window-size";
+import { MechanicalCounter as MechanicalCounterComponent } from "mechanical-counter";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
 	text: string | number;

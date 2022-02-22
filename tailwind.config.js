@@ -1,7 +1,9 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
+	mode: "jit",
 	content: ["src/**/*.{js,jsx,ts,tsx}"],
+	safelist: [{ pattern: /bg-/ }],
 	theme: {
 		screens: {
 			xs: "475px",

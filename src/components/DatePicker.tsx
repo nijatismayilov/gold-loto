@@ -1,11 +1,11 @@
 import { DatePicker as MuiDatePicker, LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import Textfield from "components/Textfield";
-import { Controller, Control } from "react-hook-form";
-import { ru, az, enGB } from "date-fns/locale";
+import { subYears } from "date-fns";
+import { az, enGB, ru } from "date-fns/locale";
 import { Language, selectLanguage } from "features/localizationSlice";
+import { Control, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { subYears, getMonth } from "date-fns";
 
 const localeMap: { [key in Language]: typeof az } = {
 	az,

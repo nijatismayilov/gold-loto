@@ -1,9 +1,9 @@
 import { configureStore, isRejectedWithValue } from "@reduxjs/toolkit";
-import { localizationSlice } from "features/localizationSlice";
 import { api } from "features/api";
 import { authSlice, flushAuth } from "features/authSlice";
-import toast from "react-hot-toast";
+import { localizationSlice } from "features/localizationSlice";
 import { UNAUTHORIZED } from "locales";
+import toast from "react-hot-toast";
 import { LocalStorage } from "utils/local-storage";
 
 const errorHandler = (api) => (next) => (action) => {

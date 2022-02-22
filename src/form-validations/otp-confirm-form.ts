@@ -1,5 +1,5 @@
 import { OtpConfirmFormLocale } from "locales/types";
-import { object, string, ref } from "yup";
+import { object, ref, string } from "yup";
 
 export type OtpConfirmErrorMessagges = {
 	reset_code: string;

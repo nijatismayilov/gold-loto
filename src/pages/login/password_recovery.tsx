@@ -1,10 +1,10 @@
-import { FC, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectLanguage } from "features/localizationSlice";
 import LoginLayout from "components/LoginLayout";
-import PasswordRecoveryForm from "components/PasswordRecoveryForm";
-import { LocalStorage } from "utils/local-storage";
 import OtpConfirmationForm from "components/OtpConfirmationForm";
+import PasswordRecoveryForm from "components/PasswordRecoveryForm";
+import { selectLanguage } from "features/localizationSlice";
+import { FC, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { LocalStorage } from "utils/local-storage";
 
 export type FormView = "passwordRecovery" | "otp";
 
