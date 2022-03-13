@@ -2,12 +2,13 @@ import LangOptionLabel from "components/LangOptionLabel";
 import Logo from "components/Logo";
 import ProfileIcon from "components/ProfileIcon";
 import { AZ, GB, RU } from "country-flag-icons/react/3x2";
-import { flushAuth, selectUser } from "features/authSlice";
+import { selectUser } from "features/authSlice";
 import { Language, selectLanguage, setLanguage } from "features/localizationSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select, { OnChangeValue } from "react-select";
 import { LocalStorage } from "utils/local-storage";
+import { useRouter } from "next/router";
 
 type LangOption = {
 	label: React.ReactNode;
@@ -33,6 +34,7 @@ const Header: React.FC = () => {
 	const dispatch = useDispatch();
 	const language = useSelector(selectLanguage);
 	const user = useSelector(selectUser);
+	const router = useRouter();
 
 	const selectValue = langOptions.find(({ value }) => value === language);
 
@@ -41,7 +43,11 @@ const Header: React.FC = () => {
 	};
 
 	const handleClick = () => {
-		dispatch(flushAuth());
+		router.push("/profile");
+	};
+
+	const handleLogoClick = () => {
+		router.push("/");
 	};
 
 	useEffect(() => {
@@ -54,7 +60,9 @@ const Header: React.FC = () => {
 		<header className='bg-primary sticky top-0 z-[1000]'>
 			<div className='container mx-auto'>
 				<div className='flex justify-start sm:justify-center items-center py-7 relative'>
-					<Logo />
+					<div className='cursor-pointer' onClick={handleLogoClick}>
+						<Logo />
+					</div>
 
 					<div className='absolute top-1/2 right-2 sm:right-0 -translate-y-1/2 flex items-center'>
 						<Select

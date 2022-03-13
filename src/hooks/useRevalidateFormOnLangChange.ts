@@ -14,7 +14,7 @@ export const useRevalidateFormOnLangChange = <T>(args: Arguments<T>) => {
 
 	useEffect(() => {
 		isMounted.current && trigger();
-	}, [, language, trigger]);
+	}, [language, trigger]);
 
 	useEffect(() => {
 		isMounted.current = true;

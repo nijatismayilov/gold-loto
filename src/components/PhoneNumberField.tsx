@@ -9,10 +9,11 @@ interface Props {
 	helperText?: string;
 	error?: boolean;
 	label?: string;
+	disabled?: boolean;
 }
 
 const PhoneNumberField: React.FC<Props> = (props) => {
-	const { name, control, helperText, error = false, label = "" } = props;
+	const { name, control, helperText, error = false, label = "", disabled = false } = props;
 
 	return (
 		<Controller
@@ -43,6 +44,7 @@ const PhoneNumberField: React.FC<Props> = (props) => {
 							onlyCountries={["az"]}
 							isValid={!error}
 							placeholder='+994 (50) 111 11 11'
+							disabled={disabled}
 						/>
 
 						{helperText && (

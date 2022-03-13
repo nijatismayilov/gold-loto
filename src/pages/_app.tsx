@@ -28,7 +28,9 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
 		<Provider store={store}>
 			<Header />
 			<AuthenticatedRoute auth={Component.auth || false}>
-				<Component {...pageProps} />
+				<main>
+					<Component {...pageProps} />
+				</main>
 			</AuthenticatedRoute>
 			<Toaster />
 			<Footer />

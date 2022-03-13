@@ -16,9 +16,9 @@ export type Game = {
 	last_won: string;
 	last_numbers: TicketRow;
 	row_count: number;
-	time_left: [number, number];
-	prize: string;
-	playerCount: number;
+	time_left?: [number, number];
+	prize?: string;
+	playerCount?: number;
 };
 
 export type GameListItem = Omit<Game, "percent" | "max_ticket" | "row_count">;

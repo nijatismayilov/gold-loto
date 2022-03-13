@@ -4,7 +4,7 @@ import {
 	GetGameByIdResult,
 	GetGamesResult,
 } from "features/types";
-import { updatePlayerCount, updatePrize, updateTimer } from "features/utils/games";
+import { GamesRecipes } from "features/utils/games";
 import { GameListItem } from "types/game";
 import { LocalStorage } from "utils/local-storage";
 import { getRandomFloat, getRandomInt } from "utils/random";
@@ -38,13 +38,13 @@ export const gamesEndpoints = api.injectEndpoints({
 			onCacheEntryAdded: async (_arg, options) => {
 				const { updateCachedData, cacheDataLoaded, cacheEntryRemoved } = options;
 
-				const countdownTimer = new Timer(() => updateCachedData(updateTimer), 1000);
+				const countdownTimer = new Timer(() => updateCachedData(GamesRecipes.updateTimer()), 1000);
 				const incrementPrizeTimer = new Timer(
-					() => updateCachedData(updatePrize(getRandomInt(1, 10))),
+					() => updateCachedData(GamesRecipes.updatePrize(getRandomInt(1, 10))),
 					150
 				);
 				const incrementPlayerCountTimer = new Timer(
-					() => updateCachedData(updatePlayerCount(getRandomInt(1, 10))),
+					() => updateCachedData(GamesRecipes.updatePlayerCount(getRandomInt(1, 10))),
 					250
 				);
 
